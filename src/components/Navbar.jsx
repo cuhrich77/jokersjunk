@@ -200,7 +200,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link to="/contact" className="btn btn-primary" style={{marginTop:8,justifyContent:'center'}}>📦 Get Free Quote</Link>
-          <a href="tel:9043341521" style={{textAlign:'center',fontWeight:600,color:'#ff6a00',padding:'8px 0'}}>📞 (904) 3341521</a>
+          <a href="tel:9043341521" style={{textAlign:'center',fontWeight:600,color:'#ff6a00',padding:'8px 0'}}>📞 (904) 334-1521</a>
         </div>
       )}
 
