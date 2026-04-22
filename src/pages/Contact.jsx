@@ -17,7 +17,7 @@ export default function Contact() {
               <p style={{color:'#555',lineHeight:1.7,marginBottom:36}}>Whether you have a single item or a whole property, our team is standing by for a fast, free quote.</p>
               <div style={{display:'flex',flexDirection:'column',gap:20,marginBottom:36}}>
                 {[
-                  {icon:'📞',label:'Call or Text',val:'(904) 334-1521,href:'tel:9043341521'},
+                  {icon:'📞',label:'Call or Text',val:'(904) 334-1521',href:'tel:9043341521'},
                   {icon:'📧',label:'Email Us',val:'hello@junkbgone.com',href:'mailto:hello@junkbgone.com'},
                   {icon:'📍',label:'Service Area',val:'All of Florida',href:null},
                 ].map(m=>(
