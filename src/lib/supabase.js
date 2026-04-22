@@ -6,7 +6,7 @@ const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function saveLead(leadData) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('leads')
     .insert([{
       first_name: leadData.firstName,
@@ -19,13 +19,10 @@ export async function saveLead(leadData) {
       message: leadData.message || '',
       status: 'new',
       source: 'website',
-      hubspot_contact_id: leadData.hubspotId || null,
-    }])
-    .select()
-    .single();
+    }]);
 
   if (error) console.error('Supabase error:', error);
-  return { data, error };
+  return { error };
 }
 
 export async function getLeads() {
