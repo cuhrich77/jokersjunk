@@ -33,7 +33,7 @@ export default function Footer() {
           <div>
             <div style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.05rem',fontWeight:700,color:'#fff',marginBottom:18,textTransform:'uppercase',letterSpacing:'.5px'}}>Contact</div>
             <div style={{display:'flex',flexDirection:'column',gap:10}}>
-              <a href="tel:7865550199" style={{color:'#999',fontSize:'.88rem'}}>📞 (904) 334-1521</a>
+              <a href="tel:9043341521" style={{color:'#999',fontSize:'.88rem'}}>📞 (904) 334-1521</a>
               <a href="mailto:hello@junkbgone.com" style={{color:'#999',fontSize:'.88rem'}}>📧 hello@junkbgone.com</a>
               <Link to="/contact" style={{color:'#999',fontSize:'.88rem'}}>🚛 Book Online</Link>
             </div>
