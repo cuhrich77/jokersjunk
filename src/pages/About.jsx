@@ -66,7 +66,7 @@ export default function About() {
         <p>Join 10,000+ happy customers across the Sunshine State.</p>
         <div className="cta-actions">
           <Link to="/contact" className="btn btn-primary">📦 Book Now</Link>
-          <a href="tel:7865550199" className="btn btn-white">📞 (786) 555-0199</a>
+          <a href="tel:7865550199" className="btn btn-white">📞 (904) 334-1521</a>
         </div>
       </div>
     </>
