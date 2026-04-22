@@ -52,7 +52,7 @@ export default function Services() {
         <p>If you can point at it, we can haul it.</p>
         <div className="cta-actions">
           <Link to="/contact" className="btn btn-primary">📦 Get Free Quote</Link>
-          <a href="tel:7865550199" className="btn btn-white">📞 Call Now</a>
+          <a href="tel:9043341521" className="btn btn-white">📞 Call Now</a>
         </div>
       </div>
     </>
