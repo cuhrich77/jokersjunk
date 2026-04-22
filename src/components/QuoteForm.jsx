@@ -12,23 +12,32 @@ export default function QuoteForm({ compact = false }) {
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-  const onSubmit = async (formData) => {
-    setSubmitting(true);
-    try {
-      const hubspotId = await createHubSpotContact(formData);
-      const { error } = await saveLead({ ...formData, hubspotId });
-      if (error) throw error;
-      toast.success('🚛 Quote request sent! We\'ll call you within minutes.');
-      setSubmitted(true);
-      reset();
-    } catch (err) {
-      console.error(err);
-      toast.error('Something went wrong. Please call us directly!');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
+  
+const onSubmit = async (formData) => {
+  setSubmitting(true);
+  try {
+    const { error } = await saveLead({
+      firstName: formData.firstName,
+      lastName: formData.lastName || '',
+      phone: formData.phone,
+      email: formData.email || '',
+      address: formData.address,
+      serviceType: formData.serviceType,
+      scheduledFor: formData.scheduledFor || 'Flexible',
+      message: formData.message || '',
+      hubspotId: null,
+    });
+    if (error) throw error;
+    toast.success('🚛 Quote request sent! We\'ll call you within minutes.');
+    setSubmitted(true);
+    reset();
+  } catch (err) {
+    console.error('Form error:', err);
+    toast.error('Something went wrong. Please call us directly!');
+  } finally {
+    setSubmitting(false);
+  }
+};
   if (submitted) return (
     <div style={{background:'#fff',borderRadius:24,padding:40,textAlign:'center',boxShadow:'0 12px 48px rgba(0,0,0,0.12)'}}>
       <div style={{fontSize:'3rem',marginBottom:16}}>✅</div>
