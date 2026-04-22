@@ -180,7 +180,7 @@ export default function Navbar() {
 
         <div style={{display:'flex',alignItems:'center',gap:14}} className="nav-cta-desktop">
           <a href="tel:7865550199" style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.1rem',fontWeight:700,color:'#ff6a00',display:'flex',alignItems:'center',gap:6}}>
-            📞 (786) 555-0199
+            📞 (904) 334-1521
           </a>
           <Link to="/contact" className="btn btn-primary" style={{padding:'12px 24px',fontSize:'1rem'}}>
             Free Quote
