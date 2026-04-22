@@ -130,7 +130,7 @@ export default function Home() {
         <p>Same-day service available. Free quote in 60 seconds.</p>
         <div className="cta-actions">
           <Link to="/contact" className="btn btn-primary">📦 Book Now — It's Free</Link>
-          <a href="tel:7865550199" className="btn btn-white">📞 (786) 555-0199</a>
+          <a href="tel:9043341521" className="btn btn-white">📞 (904) 334-1521</a>
         </div>
       </div>
 
