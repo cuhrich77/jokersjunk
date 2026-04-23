@@ -20,7 +20,7 @@ export default function Home() {
             </div>
             <h1 style={{fontSize:'clamp(2.8rem,5.5vw,4.8rem)',marginBottom:20}}>
               Your Junk.<br/>
-              <span style={{color:'#ff6a00'}}>Gone Today.</span>
+              <span style={{color:'#2d7a3a'}}>Gone Today.</span>
             </h1>
             <p style={{fontSize:'1.1rem',color:'#555',lineHeight:1.7,marginBottom:32,maxWidth:480}}>
               Same-day pickup across Florida. We haul furniture, appliances, yard waste, construction debris and more.
