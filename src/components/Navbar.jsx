@@ -29,21 +29,21 @@ export default function Navbar() {
 
   return (
     <nav style={{...navStyle, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,.08)' : 'none'}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',height:72,maxWidth:1160,margin:'0 auto'}}>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',height:96,maxWidth:1160,margin:'0 auto'}}>
 
         <Link to="/" style={{display:'flex',alignItems:'center'}}>
           <img
             src="/Jokerjunklogo.jpg"
             alt="Jokers Junk Removal"
-            style={{height:'64px', width:'auto'}}
+            style={{height:'90px', width:'auto'}}
             onError={(e) => {
               e.target.style.display='none';
               e.target.nextSibling.style.display='flex';
             }}
           />
-          <span style={{display:'none',fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.6rem',fontWeight:900,color:'#1a1a1a'}}>
-            JOKERS <span style={{color:'#2d7a3a'}}>JUNK</span> REMOVAL
-          </span>
+         <span style={{display:'none',fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.6rem',fontWeight:900,color:'#1a1a1a'}}>
+  JOKERS <span style={{color:'#2d7a3a'}}>JUNK</span> REMOVAL
+</span> 
         </Link>
 
         <div style={{display:'flex',alignItems:'center',gap:28}} className="nav-links-desktop">
