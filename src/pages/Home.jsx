@@ -14,7 +14,7 @@ export default function Home() {
       <section style={{paddingTop:72,minHeight:'100vh',background:'linear-gradient(135deg,#fff 0%,#f0f9f2 50%,#fff 100%)',display:'flex',alignItems:'center'}}>
         <div className="container" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'center',padding:'80px 24px',width:'100%'}}>
           <div>
-            <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'#fff4ed',border:'1.5px solid rgba(255,106,0,.2)',borderRadius:50,padding:'8px 18px',marginBottom:24,fontSize:'.88rem',fontWeight:600,color:'#ff6a00'}}>
+            <div style={{display:'inline-flex',alignItems:'center',gap:8, background:'#f0f9f2',border:'1.5px solid rgba(45,122,58,.2)',borderRadius:50,padding:'8px 18px',marginBottom:24,fontSize:'.88rem',fontWeight:600,color:'#ff6a00'}}>
               <span style={{width:8,height:8,background:'#ff6a00',borderRadius:'50%',display:'inline-block'}}/>
               Florida's #1 Junk Removal
             </div>
