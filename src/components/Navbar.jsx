@@ -33,7 +33,7 @@ export default function Navbar() {
 
         <Link to="/" style={{display:'flex',alignItems:'center'}}>
           <img
-            src="/jokersjunklogo.jpg"
+            src="public/jokersjunklogo.jpg"
             alt="Jokers Junk Removal"
             style={{height:'64px', width:'auto'}}
             onError={(e) => {
