@@ -20,6 +20,65 @@ const green = '#2d7a3a';
 const purple = '#7b2d8b';
 const greenLt = '#f0f9f2';
 const purpleLt = '#f9f0fb';
+function AddressAutocomplete({ value, onChange, green, greenLt }) {
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const fetchSuggestions = async (input) => {
+    if (input.length < 3) { setSuggestions([]); return; }
+    setLoading(true);
+    try {
+      const apiKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
+      const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&types=address&components=country:us&key=${apiKey}`;
+      const res = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
+      const data = await res.json();
+      setSuggestions(data.predictions || []);
+    } catch {
+      setSuggestions([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    onChange(e.target.value);
+    fetchSuggestions(e.target.value);
+    setShowSuggestions(true);
+  };
+
+  const handleSelect = (desc) => {
+    onChange(desc);
+    setSuggestions([]);
+    setShowSuggestions(false);
+  };
+
+  return (
+    <div style={{position:'relative'}}>
+      <input
+        value={value}
+        onChange={handleChange}
+        onFocus={() => value.length > 2 && setShowSuggestions(true)}
+        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+        placeholder="Start typing your address..."
+        style={{width:'100%',padding:'12px 14px',border:`2px solid ${value?green:'#e8e8e8'}`,borderRadius:10,fontSize:'.95rem',outline:'none',transition:'border .2s'}}
+      />
+      {loading && <div style={{position:'absolute',right:12,top:14,fontSize:'.8rem',color:'#999'}}>🔍</div>}
+      {showSuggestions && suggestions.length > 0 && (
+        <div style={{position:'absolute',top:'100%',left:0,right:0,background:'#fff',border:'2px solid #e8e8e8',borderRadius:10,boxShadow:'0 8px 24px rgba(0,0,0,.12)',zIndex:100,marginTop:4,overflow:'hidden'}}>
+          {suggestions.map((s,i) => (
+            <div key={i} onMouseDown={() => handleSelect(s.description)}
+              style={{padding:'12px 16px',cursor:'pointer',borderBottom:i<suggestions.length-1?'1px solid #f0f0f0':'none',fontSize:'.9rem',transition:'background .15s'}}
+              onMouseEnter={e=>e.target.style.background=greenLt}
+              onMouseLeave={e=>e.target.style.background='#fff'}>
+              📍 {s.description}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 function CalendarPicker({ selected, onSelect, today, green, greenLt }) {
   const [viewDate, setViewDate] = useState(() => {
     const d = new Date();
@@ -367,11 +426,7 @@ export default function QuoteForm({ compact = false }) {
             </div>
           </div>
 
-          <div style={{marginBottom:14}}>
-            <label style={{display:'block',fontSize:'.82rem',fontWeight:600,marginBottom:5}}>Service Address <span style={{color:green}}>*</span></label>
-            <input value={form.address} onChange={e=>set('address',e.target.value)} placeholder="1055 Three Forks CT, Saint Augustine, FL 32084"
-              style={{width:'100%',padding:'12px 14px',border:`2px solid ${form.address?green:'#e8e8e8'}`,borderRadius:10,fontSize:'.95rem',outline:'none',transition:'border .2s'}}/>
-          </div>
+          <AddressAutocomplete value={form.address} onChange={v=>set('address',v)} green={green} greenLt={greenLt}/>
 
           <div style={{marginBottom:20}}>
             <label style={{display:'block',fontSize:'.82rem',fontWeight:600,marginBottom:5}}>Additional Notes (Optional)</label>
