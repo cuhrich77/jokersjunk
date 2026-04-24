@@ -42,7 +42,7 @@ export default function Home() {
       </section>
 
       {/* STATS */}
-      <div style={{background:'#ff6a00',padding:'32px 24px'}}>
+      <div style={{background:'#2d7a3a',padding:'32px 24px'}}>
         <div className="container" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:24}}>
           {STATS.map(s=>(
             <div key={s.lbl} style={{textAlign:'center',color:'#fff'}}>
@@ -64,7 +64,7 @@ export default function Home() {
           <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:32}}>
             {STEPS.map(s=>(
               <div key={s.n} style={{textAlign:'center',padding:'48px 32px 36px',borderRadius:20,border:'2px solid #e8e8e8',position:'relative',transition:'all .3s'}}
-                onMouseEnter={e=>{e.currentTarget.style.borderColor='#ff6a00';e.currentTarget.style.transform='translateY(-6px)';}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor='#2d7a3a';e.currentTarget.style.transform='translateY(-6px)';}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor='#e8e8e8';e.currentTarget.style.transform='translateY(0)';}}>
                 <div style={{position:'absolute',top:-20,left:'50%',transform:'translateX(-50%)',width:40,height:40,background:'#ff6a00',color:'#fff',borderRadius:'50%',fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.2rem',fontWeight:900,display:'flex',alignItems:'center',justifyContent:'center'}}>{s.n}</div>
                 <div style={{fontSize:'3rem',marginBottom:20}}>{s.icon}</div>
@@ -91,7 +91,7 @@ export default function Home() {
                 <div style={{padding:24}}>
                   <h3 style={{fontSize:'1.25rem',marginBottom:8}}>{s.title}</h3>
                   <p style={{color:'#555',fontSize:'.9rem',lineHeight:1.6,marginBottom:14}}>{s.desc}</p>
-                  <Link to="/services" style={{color:'#ff6a00',fontWeight:600,fontSize:'.9rem'}}>Learn more →</Link>
+                  <Link to="/services" style={{color:'#2d7a3a',fontWeight:600,fontSize:'.9rem'}}>Learn more →</Link>
                 </div>
               </div>
             ))}
