@@ -55,51 +55,60 @@ function AddressAutocomplete({ value, onChange }) {
     setSuggestions([]);
     setShowSuggestions(false);
   };
-
-  return (
-    <div style={{position:'relative'}}>
-      <input
-        value={value}
-        onChange={handleChange}
-        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-        placeholder="Start typing your address..."
-        style={{
-          width:'100%', padding:'12px 14px',
-          border:`2px solid ${value ? green : '#e8e8e8'}`,
-          borderRadius:10, fontSize:'.95rem', outline:'none', transition:'border .2s'
-        }}
-      />
-      {loading && (
-        <div style={{position:'absolute',right:12,top:14,fontSize:'.85rem',color:'#999'}}>🔍</div>
-      )}
-      {showSuggestions && suggestions.length > 0 && (
-        <div style={{
-          position:'absolute', top:'100%', left:0, right:0,
-          background:'#fff', border:'2px solid #e8e8e8',
-          borderRadius:10, boxShadow:'0 8px 24px rgba(0,0,0,.12)',
-          zIndex:100, marginTop:4, overflow:'hidden'
-        }}>
-          {suggestions.map((s,i) => (
-            <div
-              key={i}
-              onMouseDown={() => handleSelect(s.description)}
-              style={{
-                padding:'12px 16px', cursor:'pointer',
-                borderBottom: i < suggestions.length-1 ? '1px solid #f0f0f0' : 'none',
-                fontSize:'.9rem', display:'flex', alignItems:'center', gap:8,
-                background:'#fff', transition:'background .15s'
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = greenLt}
-              onMouseLeave={e => e.currentTarget.style.background = '#fff'}
-            >
-              📍 {s.description}
-            </div>
-          ))}
+return (
+  <div style={{position:'relative'}}>
+    <input
+      value={value}
+      onChange={handleChange}
+      onBlur={() => setTimeout(() => setShowSuggestions(false), 300)}
+      onFocus={() => value.length >= 2 && setSuggestions(s => s)}
+      placeholder="Start typing your address..."
+      style={{
+        width:'100%', padding:'12px 14px',
+        border:`2px solid ${value ? green : '#e8e8e8'}`,
+        borderRadius:10, fontSize:'.95rem', outline:'none', transition:'border .2s'
+      }}
+    />
+    {loading && (
+      <div style={{position:'absolute',right:12,top:14,fontSize:'.85rem',color:'#999'}}>🔍</div>
+    )}
+    {showSuggestions && suggestions.length > 0 && (
+      <div style={{
+        position:'fixed',
+        left:'5%', right:'5%',
+        bottom:'45%',
+        background:'#fff',
+        border:'2px solid #e8e8e8',
+        borderRadius:14,
+        boxShadow:'0 -8px 32px rgba(0,0,0,.2)',
+        zIndex:9999,
+        overflow:'hidden',
+        maxHeight:220,
+        overflowY:'auto'
+      }}>
+        <div style={{padding:'10px 16px',background:green,color:'#fff',fontSize:'.8rem',fontWeight:700,letterSpacing:.5}}>
+          📍 SELECT YOUR ADDRESS
         </div>
-      )}
-    </div>
-  );
-}
+        {suggestions.map((s,i) => (
+          <div
+            key={i}
+            onMouseDown={() => handleSelect(s.description)}
+            onTouchEnd={() => handleSelect(s.description)}
+            style={{
+              padding:'14px 16px', cursor:'pointer',
+              borderBottom: i < suggestions.length-1 ? '1px solid #f0f0f0' : 'none',
+              fontSize:'.9rem', display:'flex', alignItems:'center', gap:8,
+              background:'#fff'
+            }}
+          >
+            📍 {s.description}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+);
+  
 
 // ── CALENDAR PICKER ───────────────────────────────────────────
 function CalendarPicker({ selected, onSelect }) {
