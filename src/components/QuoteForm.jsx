@@ -247,3 +247,6 @@ export default function QuoteForm({ compact = false }) {
       </p>
       <div style={{background:greenLt,borderRadius:16,padding:20,margin:'20px 0',border:`1.5px solid rgba(45,122,58,.2)`}}>
         <div style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.1rem',fontWeight:700,color:green,marginBottom:4}}>Your Appointment</d
+</div>
+  );
+      }
