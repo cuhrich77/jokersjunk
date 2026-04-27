@@ -23,48 +23,18 @@ today.setHours(0,0,0,0);
 
 // ── ADDRESS AUTOCOMPLETE ──────────────────────────────────────
 function AddressAutocomplete({ value, onChange }) {
-  const [suggestions, setSuggestions] = useState([]);
-  const debounceRef = React.useRef(null);
-
-  const fetchSuggestions = async (input) => {
-    if (input.length < 3) { setSuggestions([]); return; }
-    try {
-      const res = await fetch(`/api/places?input=${encodeURIComponent(input)}`);
-      const data = await res.json();
-      setSuggestions(data.predictions || []);
-    } catch {
-      setSuggestions([]);
-    }
-  };
-
-  const handleChange = (e) => {
-    const val = e.target.value;
-    onChange(val);
-    clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => fetchSuggestions(val), 400);
-  };
-
   return (
-    <div>
-      <input
-        list="address-suggestions"
-        value={value}
-        onChange={handleChange}
-        placeholder="Start typing your address..."
-        autoComplete="off"
-        style={{
-          width:'100%', padding:'12px 14px',
-          border:`2px solid ${value ? '#2d7a3a' : '#e8e8e8'}`,
-          borderRadius:10, fontSize:'.95rem', outline:'none',
-          transition:'border .2s'
-        }}
-      />
-      <datalist id="address-suggestions">
-        {suggestions.map((s, i) => (
-          <option key={i} value={s.description} />
-        ))}
-      </datalist>
-    </div>
+    <input
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      placeholder="1055 Three Forks CT, Saint Augustine, FL 32084"
+      style={{
+        width:'100%', padding:'12px 14px',
+        border:`2px solid ${value ? '#2d7a3a' : '#e8e8e8'}`,
+        borderRadius:10, fontSize:'.95rem', outline:'none',
+        transition:'border .2s'
+      }}
+    />
   );
 }
   
