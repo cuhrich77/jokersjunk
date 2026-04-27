@@ -1,4 +1,4 @@
-const HUBSPOT_TOKEN = process.env.REACT_APP_HUBSPOT_ACCESS_TOKEN;
+const HUBSPOT_TOKEN = 'pat-na2-c3298b80-164f-49bc-ad3f-e36a53edd852';
 const HUBSPOT_API = 'https://api.hubapi.com';
 
 const headers = {
@@ -7,16 +7,15 @@ const headers = {
 };
 
 export async function createHubSpotContact(leadData) {
-  if (!HUBSPOT_TOKEN) return null;
   try {
     const response = await fetch(`${HUBSPOT_API}/crm/v3/objects/contacts`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
         properties: {
-          firstname: leadData.firstName,
+          firstname: leadData.firstName || '',
           lastname: leadData.lastName || '',
-          phone: leadData.phone,
+          phone: leadData.phone || '',
           email: leadData.email || '',
           hs_lead_status: 'NEW',
           lifecyclestage: 'lead',
@@ -40,9 +39,10 @@ async function createHubSpotDeal(contactId, leadData) {
       headers,
       body: JSON.stringify({
         properties: {
-          dealname: `${leadData.firstName} ${leadData.lastName || ''} — ${leadData.serviceType}`,
+          dealname: (leadData.firstName || '') + ' ' + (leadData.lastName || '') + ' — ' + (leadData.serviceType || leadData.service || ''),
           dealstage: 'appointmentscheduled',
           pipeline: 'default',
+          description: leadData.message || '',
         },
         associations: [{
           to: { id: contactId },
