@@ -8,7 +8,7 @@ export default function Footer() {
         <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',gap:48,marginBottom:48}}>
           <div>
             <div style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.9rem',fontWeight:900,color:'#fff',marginBottom:14}}>
-              JOKERS <span style={{color:'#2d7a3a'}}>JUNK</span> REMOVAL 🃏
+              JOKERS <span style={{color:'#2d7a3a'}}>JUNK</span> REMOVAL🃏
             </div>
             <p style={{fontSize:'.9rem',lineHeight:1.7,color:'#999',marginBottom:24}}>Florida's most trusted junk removal company. Family-owned, eco-friendly, committed to making your life easier.</p>
           </div>
