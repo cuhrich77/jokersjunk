@@ -206,6 +206,22 @@ export default function QuoteForm({ compact = false }) {
         message:      form.type + ' customer. ZIP: ' + form.zip + '. ' + form.message,
       });
       if (error) throw error;
+      // After saveLead succeeds, add this:
+await fetch('/api/notify', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    firstName: form.firstName,
+    lastName: form.lastName,
+    phone: form.phone,
+    email: form.email,
+    address: form.address,
+    serviceType: form.service,
+    scheduledFor: form.day?.full + ' - ' + (TIME_SLOTS.find(t=>t.id===form.timeSlot)?.label || ''),
+    message: form.message,
+    type: form.type,
+  }),
+});
       setSubmitted(true);
     } catch (err) {
       console.error(err);
