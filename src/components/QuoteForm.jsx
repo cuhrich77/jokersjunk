@@ -320,13 +320,13 @@ await fetch('/api/notify', {
               style={{width:'100%',padding:'14px 16px',border:'2px solid '+(form.zip.length>=5?G:'#e8e8e8'),borderRadius:12,fontSize:'1.1rem',fontFamily:'Barlow Condensed,sans-serif',fontWeight:700,letterSpacing:4,outline:'none',transition:'border .2s'}}/>
             {form.zip.length>=5 && SERVICE_ZIPS.has(form.zip) && (
   <div style={{color:G,fontSize:'.85rem',fontWeight:600,marginTop:6}}>✅ We serve your area!</div>
+
 )}
 {form.zip.length>=5 && !SERVICE_ZIPS.has(form.zip) && (
-  <div style={{color:'#dc2626',fontSize:'.85rem',fontWeight:600,marginTop:6}}>
-    ❌ Sorry, we don't currently serve this area. We cover Northeast Florida — Jacksonville, Saint Augustine, Palatka & Lake City.
-  </div>
+  <div style={{color:'#dc2626',fontSize:'.85rem',fontWeight:600,marginTop:6}}>❌ Sorry, we don't serve this ZIP. We cover Jacksonville, Saint Augustine, Palatka, Lake City, Callahan and Yulee.</div>
 )}
-          </div>
+  
+     </div>
           <div style={{marginBottom:24}}>
             <label style={{display:'block',fontSize:'.85rem',fontWeight:600,marginBottom:10}}>What do you need hauled? <span style={{color:G}}>*</span></label>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
