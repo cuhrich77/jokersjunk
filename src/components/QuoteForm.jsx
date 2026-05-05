@@ -42,6 +42,7 @@ const SERVICE_ZIPS = new Set([
   // Macclenny
   '32063',
 ]);
+const G  = '#2d7a3a';
 const P  = '#7b2d8b';
 const GL = '#f0f9f2';
 const PL = '#f9f0fb';
