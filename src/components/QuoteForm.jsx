@@ -14,7 +14,34 @@ const TIME_SLOTS = [
   { id:'evening',   label:'Evening',   time:'4pm – 7pm',   icon:'🌆' },
 ];
 
-const G  = '#2d7a3a';
+const SERVICE_ZIPS = new Set([
+  // Jacksonville
+  '32099','32201','32202','32203','32204','32205','32206','32207','32208','32209',
+  '32210','32211','32212','32214','32215','32216','32217','32218','32219','32220',
+  '32221','32222','32223','32224','32225','32226','32227','32228','32229','32230',
+  '32231','32232','32234','32235','32236','32237','32238','32239','32240','32241',
+  '32244','32245','32246','32247','32250','32254','32255','32256','32257','32258',
+  '32259','32260','32266','32267','32277',
+  // Saint Augustine
+  '32080','32081','32082','32083','32084','32085','32086','32087','32092','32095',
+  '32145',
+  // Palatka
+  '32177','32178',
+  // Lake City
+  '32024','32025','32026','32055','32056',
+  // Orange Park / Fleming Island
+  '32003','32065','32067','32068','32073',
+  // Fernandina Beach / Yulee
+  '32034','32041','32097','32011',
+  // Gainesville area border
+  '32601','32602','32603','32604','32605','32606','32607','32608','32609','32610',
+  // Green Cove Springs / Middleburg
+  '32043','32050','32068',
+  // Starke
+  '32091',
+  // Macclenny
+  '32063',
+]);
 const P  = '#7b2d8b';
 const GL = '#f0f9f2';
 const PL = '#f9f0fb';
@@ -291,7 +318,14 @@ await fetch('/api/notify', {
             <label style={{display:'block',fontSize:'.85rem',fontWeight:600,marginBottom:6}}>ZIP Code <span style={{color:G}}>*</span></label>
             <input type="number" placeholder="32084" value={form.zip} onChange={e=>set('zip',e.target.value)}
               style={{width:'100%',padding:'14px 16px',border:'2px solid '+(form.zip.length>=5?G:'#e8e8e8'),borderRadius:12,fontSize:'1.1rem',fontFamily:'Barlow Condensed,sans-serif',fontWeight:700,letterSpacing:4,outline:'none',transition:'border .2s'}}/>
-            {form.zip.length>=5 && <div style={{color:G,fontSize:'.85rem',fontWeight:600,marginTop:6}}>✅ We serve your area!</div>}
+            {form.zip.length>=5 && SERVICE_ZIPS.has(form.zip) && (
+  <div style={{color:G,fontSize:'.85rem',fontWeight:600,marginTop:6}}>✅ We serve your area!</div>
+)}
+{form.zip.length>=5 && !SERVICE_ZIPS.has(form.zip) && (
+  <div style={{color:'#dc2626',fontSize:'.85rem',fontWeight:600,marginTop:6}}>
+    ❌ Sorry, we don't currently serve this area. We cover Northeast Florida — Jacksonville, Saint Augustine, Palatka & Lake City.
+  </div>
+)}
           </div>
           <div style={{marginBottom:24}}>
             <label style={{display:'block',fontSize:'.85rem',fontWeight:600,marginBottom:10}}>What do you need hauled? <span style={{color:G}}>*</span></label>
