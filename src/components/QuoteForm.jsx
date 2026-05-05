@@ -210,7 +210,7 @@ export default function QuoteForm({ compact = false }) {
   });
 
   const set       = (key, val) => setForm(f => ({...f, [key]: val}));
-  const canNext1  = form.zip.length >= 5 && form.service;
+ const canNext1 = form.zip.length >= 5 && form.service && SERVICE_ZIPS.has(form.zip); 
   const canNext2  = form.day !== null && form.timeSlot !== null;
   const canSubmit = form.firstName && form.phone && form.address;
 
