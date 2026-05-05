@@ -318,9 +318,8 @@ await fetch('/api/notify', {
             <label style={{display:'block',fontSize:'.85rem',fontWeight:600,marginBottom:6}}>ZIP Code <span style={{color:G}}>*</span></label>
             <input type="number" placeholder="32084" value={form.zip} onChange={e=>set('zip',e.target.value)}
               style={{width:'100%',padding:'14px 16px',border:'2px solid '+(form.zip.length>=5?G:'#e8e8e8'),borderRadius:12,fontSize:'1.1rem',fontFamily:'Barlow Condensed,sans-serif',fontWeight:700,letterSpacing:4,outline:'none',transition:'border .2s'}}/>
-            {form.zip.length>=5 && SERVICE_ZIPS.has(form.zip) && (
+{form.zip.length>=5 && SERVICE_ZIPS.has(form.zip) && (
   <div style={{color:G,fontSize:'.85rem',fontWeight:600,marginTop:6}}>✅ We serve your area!</div>
-
 )}
 {form.zip.length>=5 && !SERVICE_ZIPS.has(form.zip) && (
   <div style={{color:'#dc2626',fontSize:'.85rem',fontWeight:600,marginTop:6}}>❌ Sorry, we don't serve this ZIP. We cover Jacksonville, Saint Augustine, Palatka, Lake City, Callahan and Yulee.</div>
