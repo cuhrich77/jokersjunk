@@ -10,7 +10,7 @@ const LINKS = [
 
 const navStyle = {
   position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
- background: 'linear-gradient(135deg,#2d7a3a 0%,#7b2d8b 100%)', backdropFilter: 'blur(12px)', 
+background: '#f5f5f5', backdropFilter: 'blur(12px)', 
   borderBottom: '1px solid #e8e8e8', transition: 'box-shadow .3s',
 };
 
@@ -31,29 +31,17 @@ export default function Navbar() {
     <nav style={{...navStyle, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,.08)' : 'none'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',height:96,maxWidth:1160,margin:'0 auto'}}>
 
-        <Link to="/" style={{display:'flex',alignItems:'center',gap:12}}>
+       <Link to="/" style={{display:'flex',alignItems:'center',gap:16,flex:1,justifyContent:'center'}}>
   <img
-    src="/Jokersjunklogo1.png"
+    src="/jokersjunklogo.jpg"
     alt="Jokers Junk Removal"
     style={{height:'90px', width:'auto'}}
   />
   <div style={{display:'flex',flexDirection:'column',lineHeight:1.1}}>
-    <span style={{
-      fontFamily:'Barlow Condensed,sans-serif',
-      fontSize:'1.8rem',
-      fontWeight:900,
-      color:'#2d7a3a',
-      letterSpacing:'1px'
-    }}>JOKERS</span>
-    <span style={{
-      fontFamily:'Barlow Condensed,sans-serif',
-      fontSize:'1.4rem',
-      fontWeight:700,
-      color:'#1a1a1a',
-      letterSpacing:'1px'
-    }}>JUNK REMOVAL</span>
+    <span style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'2.4rem',fontWeight:900,color:'#2d7a3a',letterSpacing:'2px'}}>JOKERS</span>
+    <span style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.8rem',fontWeight:700,color:'#7b2d8b',letterSpacing:'2px'}}>JUNK REMOVAL</span>
   </div>
-</Link>
+</Link> 
 
         <div style={{display:'flex',alignItems:'center',gap:28}} className="nav-links-desktop">
           {LINKS.map(l => (
