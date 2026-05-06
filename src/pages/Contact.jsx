@@ -18,8 +18,8 @@ export default function Contact() {
               <div style={{display:'flex',flexDirection:'column',gap:20,marginBottom:36}}>
                 {[
                   {icon:'📞',label:'Call or Text',val:'(904) 334-1521',href:'tel:9043341521'},
-                  {icon:'📧',label:'Email Us',val:'hello@junkbgone.com',href:'mailto:hello@junkbgone.com'},
-                  {icon:'📍',label:'Service Area',val:'All of Florida',href:null},
+                  {icon:'📧',label:'Email Us',val:'hello@jokersjunk.com',href:'mailto:hello@jokersjunk.com'},
+                  {icon:'📍',label:'Service Area',val:'NE Florida',href:null},
                 ].map(m=>(
                   <div key={m.label} style={{display:'flex',gap:16,alignItems:'center'}}>
                     <div style={{width:52,height:52,minWidth:52,background:'#ff6a00',borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.4rem'}}>{m.icon}</div>
@@ -35,7 +35,7 @@ export default function Contact() {
               </div>
               <h3 style={{fontSize:'1.2rem',marginBottom:14}}>Hours of Operation</h3>
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:28}}>
-                {[{day:'Mon – Fri',time:'7am – 7pm'},{day:'Saturday',time:'8am – 6pm'},{day:'Sunday',time:'9am – 4pm'},{day:'Holidays',time:'Call Ahead'}].map(h=>(
+                {[{day:'Mon – Fri',time:'6am – 7pm'},{day:'Saturday',time:'7am – 6pm'},{day:'Sunday',time:'Closed'},{day:'Holidays',time:'Call Ahead'}].map(h=>(
                   <div key={h.day} style={{display:'flex',justifyContent:'space-between',padding:'10px 14px',background:'#f8f8f8',borderRadius:10,fontSize:'.88rem'}}>
                     <span style={{fontWeight:600}}>{h.day}</span>
                     <span style={{color:'#ff6a00',fontWeight:500}}>{h.time}</span>
