@@ -28,31 +28,33 @@ export default function Navbar() {
   useEffect(() => setMenuOpen(false), [location]);
 
   return (
-    <nav style={{...navStyle, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,.08)' : 'none'}}>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',height:96,maxWidth:1160,margin:'0 auto'}}>
+   <nav style={{...navStyle, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,.08)' : 'none', position:'relative'}}> 
+     <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',height:96,maxWidth:1160,margin:'0 auto',width:'100%'}}> 
 
       <Link to="/" style={{display:'flex',alignItems:'center',gap:12}}>
   <img
-    src="/Jokersjunklogo1.png"
+    src="/jokersjunklogo.jpg"
     alt="Jokers Junk Removal"
     style={{height:'80px', width:'auto'}}
   />
+</Link>
+<div style={{position:'absolute',left:'50%',transform:'translateX(-50%)',textAlign:'center'}}>
   <span style={{
-    fontFamily:'Barlow Condensed,sans-serif',
-    fontSize:'2rem',
+    fontFamily:'"Comic Sans MS","Chalkboard SE","Comic Neue",cursive',
+    fontSize:'2.2rem',
     fontWeight:900,
-    letterSpacing:'3px',
+    letterSpacing:'2px',
     lineHeight:1,
   }}>
     <span style={{color:'#7b2d8b'}}>J</span>
-    <span style={{color:'#2d7a3a'}}>O</span>
-    <span style={{color:'#7b2d8b'}}>K</span>
-    <span style={{color:'#2d7a3a'}}>E</span>
-    <span style={{color:'#7b2d8b'}}>R</span>
-    <span style={{color:'#2d7a3a'}}>S</span>
-    <span style={{color:'#555'}}> JUNK REMOVAL</span>
+    <span style={{color:'#2d7a3a'}}>o</span>
+    <span style={{color:'#7b2d8b'}}>k</span>
+    <span style={{color:'#2d7a3a'}}>e</span>
+    <span style={{color:'#7b2d8b'}}>r</span>
+    <span style={{color:'#2d7a3a'}}>s</span>
+    <span style={{color:'#1a1a1a'}}> Junk Removal</span>
   </span>
-</Link> 
+</div>
 
         <div style={{display:'flex',alignItems:'center',gap:28}} className="nav-links-desktop">
           {LINKS.map(l => (
