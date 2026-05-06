@@ -31,16 +31,27 @@ export default function Navbar() {
     <nav style={{...navStyle, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,.08)' : 'none'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',height:96,maxWidth:1160,margin:'0 auto'}}>
 
-       <Link to="/" style={{display:'flex',alignItems:'center',gap:16,flex:1,justifyContent:'center'}}>
+      <Link to="/" style={{display:'flex',alignItems:'center',gap:12}}>
   <img
     src="/Jokersjunklogo1.png"
     alt="Jokers Junk Removal"
-    style={{height:'90px', width:'auto'}}
+    style={{height:'80px', width:'auto'}}
   />
-  <div style={{display:'flex',flexDirection:'column',lineHeight:1.1}}>
-    <span style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'2.4rem',fontWeight:900,color:'#2d7a3a',letterSpacing:'2px'}}>JOKERS</span>
-    <span style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.8rem',fontWeight:700,color:'#7b2d8b',letterSpacing:'2px'}}>JUNK REMOVAL</span>
-  </div>
+  <span style={{
+    fontFamily:'Barlow Condensed,sans-serif',
+    fontSize:'2rem',
+    fontWeight:900,
+    letterSpacing:'3px',
+    lineHeight:1,
+  }}>
+    <span style={{color:'#7b2d8b'}}>J</span>
+    <span style={{color:'#2d7a3a'}}>O</span>
+    <span style={{color:'#7b2d8b'}}>K</span>
+    <span style={{color:'#2d7a3a'}}>E</span>
+    <span style={{color:'#7b2d8b'}}>R</span>
+    <span style={{color:'#2d7a3a'}}>S</span>
+    <span style={{color:'#555'}}> JUNK REMOVAL</span>
+  </span>
 </Link> 
 
         <div style={{display:'flex',alignItems:'center',gap:28}} className="nav-links-desktop">
