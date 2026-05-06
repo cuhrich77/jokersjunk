@@ -10,7 +10,7 @@ const LINKS = [
 
 const navStyle = {
   position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-  background: 'rgba(255,255,255,.96)', backdropFilter: 'blur(12px)',
+ background: 'linear-gradient(135deg,#2d7a3a 0%,#7b2d8b 100%)', backdropFilter: 'blur(12px)', 
   borderBottom: '1px solid #e8e8e8', transition: 'box-shadow .3s',
 };
 
