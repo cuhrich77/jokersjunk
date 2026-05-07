@@ -28,80 +28,119 @@ export default function Navbar() {
   useEffect(() => setMenuOpen(false), [location]);
 
   return (
-   <nav style={{...navStyle, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,.08)' : 'none', position:'relative'}}> 
-     <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',height:96,maxWidth:1160,margin:'0 auto',width:'100%'}}> 
-{/* Replace your current logo text with this */}
-<Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
-  <img src="/Jokersjunklogo1.png" alt="logo" style={{ height: '52px', width: 'auto' }} />
-  <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-    <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
-      {'Jokers'.split('').map((letter, i) => {
-        const rotations = [-4, 3, -2, 5, -3, 2];
-        const rises = [2, -3, 1, -4, 2, -1];
-        return (
-          <span
-            key={i}
-            style={{
-              display: 'inline-block',
-              fontFamily: "'Pacifico', cursive",
-              fontSize: '2rem',
-              color: '#7B2D8B',
-              transform: `rotate(${rotations[i]}deg) translateY(${rises[i]}px)`,
-              transformOrigin: 'bottom center',
-              fontWeight: 'normal',
-            }}
-          >
-            {letter}
-          </span>
-        );
-      })}
-    </span>
-    <span style={{
-      fontFamily: "'Bebas Neue', sans-serif",
-      fontSize: '1.4rem',
-      color: '#1a1a1a',
-      letterSpacing: '3px',
-      marginTop: '2px',
-    }}>
-      JUNK REMOVAL
-    </span>
-  </div>
-</Link>
+   <nav style={{...navStyle, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,.08)' : 'none'}}>
       
-        <div style={{display:'flex',alignItems:'center',gap:28}} className="nav-links-desktop">
-          {LINKS.map(l => (
-            <Link key={l.path} to={l.path} style={{
-              fontWeight: location.pathname === l.path ? 600 : 500,
-              fontSize: '.95rem',
-              color: location.pathname === l.path ? '#2d7a3a' : '#555',
-              transition: 'color .2s'
-            }}>{l.label}</Link>
-          ))}
-        </div>
+      {/* TOP ROW — Logo | Name | Phone */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr auto 1fr',
+        alignItems: 'center',
+        padding: '0 24px',
+        height: 72,
+        maxWidth: 1160,
+        margin: '0 auto',
+        width: '100%',
+      }}>
 
-        <div style={{display:'flex',alignItems:'center',gap:14}} className="nav-cta-desktop">
-          <a href="tel:9043341521" style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.1rem',fontWeight:700,color:'#2d7a3a',display:'flex',alignItems:'center',gap:6}}>
+        {/* LEFT — Logo */}
+        <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+          <img src="/Jokersjunklogo1.png" alt="logo" style={{ height: '58px', width: 'auto' }} />
+        </Link>
+
+        {/* CENTER — Brand name */}
+        <Link to="/" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: 1 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+            {'Jokers'.split('').map((letter, i) => {
+              const rotations = [-4, 3, -2, 5, -3, 2];
+              const rises = [2, -3, 1, -4, 2, -1];
+              return (
+                <span key={i} style={{
+                  display: 'inline-block',
+                  fontFamily: "'Pacifico', cursive",
+                  fontSize: '2.2rem',
+                  color: '#7B2D8B',
+                  transform: `rotate(${rotations[i]}deg) translateY(${rises[i]}px)`,
+                  transformOrigin: 'bottom center',
+                  fontWeight: 'normal',
+                }}>
+                  {letter}
+                </span>
+              );
+            })}
+          </span>
+          <span style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: '1.4rem',
+            color: '#1a1a1a',
+            letterSpacing: '4px',
+            marginTop: '4px',
+          }}>
+            JUNK REMOVAL
+          </span>
+        </Link>
+
+        {/* RIGHT — Phone */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }} className="nav-cta-desktop">
+          <a href="tel:9043341521" style={{
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontSize: '1.4rem',
+            fontWeight: 700,
+            color: '#2d7a3a',
+            letterSpacing: '1px',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+          }}>
             📞 (904) 334-1521
           </a>
-          <Link to="/contact" className="btn btn-primary" style={{padding:'12px 24px',fontSize:'1rem',background:'#2d7a3a'}}>
-            Free Quote
-          </Link>
         </div>
 
-        <button onClick={() => setMenuOpen(o => !o)} style={{display:'none',background:'none',border:'none',fontSize:'1.6rem',cursor:'pointer'}} className="hamburger">
+        {/* HAMBURGER — mobile only */}
+        <button onClick={() => setMenuOpen(o => !o)}
+          style={{ display: 'none', background: 'none', border: 'none', fontSize: '1.6rem', cursor: 'pointer', gridColumn: 3, justifySelf: 'end' }}
+          className="hamburger">
           {menuOpen ? '✕' : '☰'}
         </button>
       </div>
 
+      {/* SECOND ROW — Nav links desktop */}
+      <div className="nav-links-desktop" style={{
+        borderTop: '1px solid #e8e8e8',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: 40,
+        padding: '10px 24px',
+        background: '#f5f5f5',
+      }}>
+        {LINKS.map(l => (
+          <Link key={l.path} to={l.path} style={{
+            fontWeight: location.pathname === l.path ? 700 : 500,
+            fontSize: '1rem',
+            color: location.pathname === l.path ? '#2d7a3a' : '#555',
+            textDecoration: 'none',
+            letterSpacing: '0.5px',
+            transition: 'color .2s',
+          }}>
+            {l.label}
+          </Link>
+        ))}
+      </div>
+
+      {/* Mobile menu */}
       {menuOpen && (
-        <div style={{background:'#fff',borderTop:'1px solid #e8e8e8',padding:'16px 24px 20px',display:'flex',flexDirection:'column',gap:4}}>
+        <div style={{ background: '#fff', borderTop: '1px solid #e8e8e8', padding: '16px 24px 20px', display: 'flex', flexDirection: 'column', gap: 4 }}>
           {LINKS.map(l => (
-            <Link key={l.path} to={l.path} style={{padding:'12px 0',fontSize:'1.1rem',fontWeight:500,color:location.pathname===l.path?'#2d7a3a':'#555',borderBottom:'1px solid #e8e8e8'}}>
+            <Link key={l.path} to={l.path} style={{
+              padding: '12px 0', fontSize: '1.1rem', fontWeight: 500,
+              color: location.pathname === l.path ? '#2d7a3a' : '#555',
+              borderBottom: '1px solid #e8e8e8',
+              textDecoration: 'none',
+            }}>
               {l.label}
             </Link>
           ))}
-          <Link to="/contact" className="btn btn-primary" style={{marginTop:8,justifyContent:'center',background:'#2d7a3a'}}>📦 Get Free Quote</Link>
-          <a href="tel:9043341521" style={{textAlign:'center',fontWeight:600,color:'#2d7a3a',padding:'8px 0'}}>📞 (904) 334-1521</a>
+          <a href="tel:9043341521" style={{ textAlign: 'center', fontWeight: 600, color: '#2d7a3a', padding: '8px 0' }}>📞 (904) 334-1521</a>
         </div>
       )}
 
