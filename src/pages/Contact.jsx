@@ -22,7 +22,7 @@ export default function Contact() {
                   {icon:'📍',label:'Service Area',val:'NE Florida',href:null},
                 ].map(m=>(
                   <div key={m.label} style={{display:'flex',gap:16,alignItems:'center'}}>
-                    <div style={{width:52,height:52,minWidth:52,background:'#ff6a00',borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.4rem'}}>{m.icon}</div>
+                    <div style={{width:52,height:52,minWidth:52,background:'#4ade80',borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.4rem'}}>{m.icon}</div>
                     <div>
                       <div style={{fontSize:'.78rem',color:'#999',fontWeight:500,textTransform:'uppercase',letterSpacing:'.5px'}}>{m.label}</div>
                       {m.href
@@ -38,11 +38,11 @@ export default function Contact() {
                 {[{day:'Mon – Fri',time:'6am – 7pm'},{day:'Saturday',time:'7am – 6pm'},{day:'Sunday',time:'Closed'},{day:'Holidays',time:'Call Ahead'}].map(h=>(
                   <div key={h.day} style={{display:'flex',justifyContent:'space-between',padding:'10px 14px',background:'#f8f8f8',borderRadius:10,fontSize:'.88rem'}}>
                     <span style={{fontWeight:600}}>{h.day}</span>
-                    <span style={{color:'#ff6a00',fontWeight:500}}>{h.time}</span>
+                    <span style={{color:'#2d7a3a',fontWeight:500}}>{h.time}</span>
                   </div>
                 ))}
               </div>
-              <div style={{background:'#fff4ed',borderRadius:16,padding:24,border:'1.5px solid rgba(255,106,0,.2)'}}>
+              <div style={{background:'#f0fdf4',borderRadius:16,padding:24,border:'1.5px solid rgba(45,122,58,.2)'}}>
                 <div style={{fontSize:'1.6rem',marginBottom:8}}>🚛</div>
                 <strong style={{display:'block',marginBottom:6}}>Same-Day Service Available</strong>
                 <p style={{color:'#555',fontSize:'.9rem',margin:0}}>Book before noon and we'll be there today.</p>
