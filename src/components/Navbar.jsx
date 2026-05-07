@@ -36,7 +36,7 @@ export default function Navbar() {
         gridTemplateColumns: '1fr auto 1fr',
         alignItems: 'center',
         padding: '0 24px',
-        height: 90,
+        height: 100,
         maxWidth: 1160,
         margin: '0 auto',
         width: '100%',
@@ -44,7 +44,7 @@ export default function Navbar() {
 
         {/* LEFT — Logo */}
         <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-          <img src="/Jokersjunklogo1.png" alt="logo" style={{ height: '90px', width: 'auto' }} />
+          <img src="/Jokersjunklogo1.png" alt="logo" style={{ height: '100px', width: 'auto' }} />
         </Link>
 
         {/* CENTER — Brand name */}
