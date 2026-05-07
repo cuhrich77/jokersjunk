@@ -15,7 +15,7 @@ export default function About() {
     <>
       <div className="inner-hero">
         <div className="tag">Our Story</div>
-        <h1>About <span>Junk B Gone</span></h1>
+        <h1>About <span>Jokers Junk Removal</span></h1>
         <p>Florida-born, family-run, on a mission to make decluttering easy, affordable, and eco-friendly.</p>
       </div>
 
@@ -32,10 +32,10 @@ export default function About() {
               <h2 style={{fontSize:'2.4rem',marginBottom:20}}>
                 We Started With <span style={{color:'#ff6a00'}}>One Truck</span> and a Big Idea
               </h2>
-              <p style={{color:'#555',lineHeight:1.8,marginBottom:14}}>Junk B Gone was started by Florida native Carlos Rivera in 2018 after noticing how hard it was for homeowners to get reliable, affordable junk removal.</p>
-              <p style={{color:'#555',lineHeight:1.8,marginBottom:14}}>With a single pickup truck and a passion for helping his community, Carlos built Junk B Gone from the ground up. Today we operate a fleet of trucks across Florida and have helped over 10,000 customers.</p>
-              <p style={{color:'#555',lineHeight:1.8,marginBottom:14}}>We believe junk removal should be simple, transparent, and done right — upfront pricing, background-checked crews, and a commitment to donating and recycling.</p>
-              <p style={{fontWeight:600,color:'#1a1a1a',lineHeight:1.8}}>Because when your junk is gone, your life gets a little lighter. That's the Junk B Gone promise.</p>
+              <p style={{color:'#555',lineHeight:1.8,marginBottom:14}}>Jokers Junk Removal was started by Florida native Chris Uhrich in 2025 after noticing how hard it was for homeowners and landlords to get reliable, affordable junk removal.</p>
+              <p style={{color:'#555',lineHeight:1.8,marginBottom:14}}>With a single pickup truck and a passion for helping his community, Chris built Jokers Junk Removal from the ground up. Today we operate proudly across Northeast Florida and have helped many customers get rid of their junk.</p>
+              <p style={{color:'#555',lineHeight:1.8,marginBottom:14}}>We believe junk removal should be simple, customer focused, and done right — upfront pricing, background-checked crews, and a commitment to donating and recycling.</p>
+              <p style={{fontWeight:600,color:'#1a1a1a',lineHeight:1.8}}>Because when your junk is gone, your life gets a little lighter. That's the Jokers Junk promise.</p>
               <div style={{display:'flex',gap:16,flexWrap:'wrap',marginTop:28}}>
                 <Link to="/contact" className="btn btn-primary">Get a Free Quote</Link>
                 <Link to="/services" className="btn btn-outline">See Our Services</Link>
