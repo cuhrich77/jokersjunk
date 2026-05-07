@@ -36,7 +36,7 @@ export default function Services() {
                   <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:5}}>
                     {s.items.map(i=>(
                       <li key={i} style={{fontSize:'.86rem',color:'#555',display:'flex',gap:8,alignItems:'center'}}>
-                        <span style={{color:'##7B2D8B',fontWeight:700}}>✓</span>{i}
+                        <span style={{color:'#7B2D8B',fontWeight:700}}>✓</span>{i}
                       </li>
                     ))}
                   </ul>
