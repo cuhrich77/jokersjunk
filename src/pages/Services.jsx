@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const SERVICES = [
@@ -13,6 +13,8 @@ const SERVICES = [
 ];
 
 export default function Services() {
+  const [activeCard, setActiveCard] = useState(null);
+
   return (
     <>
       <div className="inner-hero">
@@ -25,24 +27,44 @@ export default function Services() {
       <section className="section">
         <div className="container">
           <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:28}}>
-            {SERVICES.map(s=>(
-              <div key={s.title} style={{background:'#fff',border:'1.5px solid #e8e8e8',borderRadius:20,padding:36,display:'flex',gap:22,alignItems:'flex-start',transition:'all .3s'}}
-                onMouseEnter={e=>{e.currentTarget.style.borderColor='##7B2D8B';e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow='0 4px 24px rgba(255,106,0,.10)';}}
-                onMouseLeave={e=>{e.currentTarget.style.borderColor='#e8e8e8';e.currentTarget.style.transform='translateY(0)';e.currentTarget.style.boxShadow='none';}}>
-                <div style={{fontSize:'2.6rem',minWidth:56}}>{s.icon}</div>
-                <div>
-                  <h3 style={{fontSize:'1.35rem',marginBottom:10}}>{s.title}</h3>
-                  <p style={{color:'#555',lineHeight:1.7,fontSize:'.92rem',marginBottom:14}}>{s.desc}</p>
-                  <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:5}}>
-                    {s.items.map(i=>(
-                      <li key={i} style={{fontSize:'.86rem',color:'#555',display:'flex',gap:8,alignItems:'center'}}>
-                        <span style={{color:'#7B2D8B',fontWeight:700}}>✓</span>{i}
-                      </li>
-                    ))}
-                  </ul>
+            {SERVICES.map(s => {
+              const isActive = activeCard === s.title;
+              return (
+                <div
+                  key={s.title}
+                  onMouseEnter={() => setActiveCard(s.title)}
+                  onMouseLeave={() => setActiveCard(null)}
+                  onTouchStart={() => setActiveCard(s.title)}
+                  onTouchEnd={() => setTimeout(() => setActiveCard(null), 400)}
+                  style={{
+                    background: '#fff',
+                    border: `2px solid ${isActive ? '#7B2D8B' : '#e8e8e8'}`,
+                    borderRadius: 20,
+                    padding: 36,
+                    display: 'flex',
+                    gap: 22,
+                    alignItems: 'flex-start',
+                    transition: 'all .3s',
+                    transform: isActive ? 'translateY(-4px)' : 'translateY(0)',
+                    boxShadow: isActive ? '0 4px 24px rgba(123,45,139,.18)' : 'none',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <div style={{fontSize:'2.6rem',minWidth:56}}>{s.icon}</div>
+                  <div>
+                    <h3 style={{fontSize:'1.35rem',marginBottom:10,color: isActive ? '#7B2D8B' : '#1a1a1a'}}>{s.title}</h3>
+                    <p style={{color:'#555',lineHeight:1.7,fontSize:'.92rem',marginBottom:14}}>{s.desc}</p>
+                    <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:5}}>
+                      {s.items.map(i => (
+                        <li key={i} style={{fontSize:'.86rem',color:'#555',display:'flex',gap:8,alignItems:'center'}}>
+                          <span style={{color:'#7B2D8B',fontWeight:700}}>✓</span>{i}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
