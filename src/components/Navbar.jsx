@@ -30,32 +30,44 @@ export default function Navbar() {
   return (
    <nav style={{...navStyle, boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,.08)' : 'none', position:'relative'}}> 
      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 24px',height:96,maxWidth:1160,margin:'0 auto',width:'100%'}}> 
-
-      <Link to="/" style={{display:'flex',alignItems:'center',gap:12}}>
-  <img
-    src="/Jokersjunklogo1.png"
-    alt="Jokers Junk Removal"
-    style={{height:'80px', width:'auto'}}
-  />
+{/* Replace your current logo text with this */}
+<Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
+  <img src="/Jokersjunklogo1.png" alt="logo" style={{ height: '52px', width: 'auto' }} />
+  <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+    <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+      {'Jokers'.split('').map((letter, i) => {
+        const rotations = [-4, 3, -2, 5, -3, 2];
+        const rises = [2, -3, 1, -4, 2, -1];
+        return (
+          <span
+            key={i}
+            style={{
+              display: 'inline-block',
+              fontFamily: "'Pacifico', cursive",
+              fontSize: '2rem',
+              color: '#7B2D8B',
+              transform: `rotate(${rotations[i]}deg) translateY(${rises[i]}px)`,
+              transformOrigin: 'bottom center',
+              fontWeight: 'normal',
+            }}
+          >
+            {letter}
+          </span>
+        );
+      })}
+    </span>
+    <span style={{
+      fontFamily: "'Bebas Neue', sans-serif",
+      fontSize: '1.4rem',
+      color: '#1a1a1a',
+      letterSpacing: '3px',
+      marginTop: '2px',
+    }}>
+      JUNK REMOVAL
+    </span>
+  </div>
 </Link>
-<div style={{position:'absolute',left:'50%',transform:'translateX(-50%)',textAlign:'center'}}>
-  <span style={{
-    fontFamily:'"Comic Sans MS","Chalkboard SE","Comic Neue",cursive',
-    fontSize:'2.2rem',
-    fontWeight:900,
-    letterSpacing:'2px',
-    lineHeight:1,
-  }}>
-    <span style={{color:'#7b2d8b'}}>J</span>
-    <span style={{color:'#2d7a3a'}}>o</span>
-    <span style={{color:'#7b2d8b'}}>k</span>
-    <span style={{color:'#2d7a3a'}}>e</span>
-    <span style={{color:'#7b2d8b'}}>r</span>
-    <span style={{color:'#2d7a3a'}}>s</span>
-    <span style={{color:'#1a1a1a'}}> Junk Removal</span>
-  </span>
-</div>
-
+      
         <div style={{display:'flex',alignItems:'center',gap:28}} className="nav-links-desktop">
           {LINKS.map(l => (
             <Link key={l.path} to={l.path} style={{
