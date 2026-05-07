@@ -48,36 +48,40 @@ export default function Navbar() {
         </Link>
 
         {/* CENTER — Brand name */}
-        <Link to="/" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: 1 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
-            {'Jokers'.split('').map((letter, i) => {
-              const rotations = [-4, 3, -2, 5, -3, 2];
-              const rises = [2, -3, 1, -4, 2, -1];
-              return (
-                <span key={i} style={{
-                  display: 'inline-block',
-                  fontFamily: "'Pacifico', cursive",
-                  fontSize: '2.2rem',
-                  color: '#7B2D8B',
-                  transform: `rotate(${rotations[i]}deg) translateY(${rises[i]}px)`,
-                  transformOrigin: 'bottom center',
-                  fontWeight: 'normal',
-                }}>
-                  {letter}
-                </span>
-              );
-            })}
-          </span>
-          <span style={{
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: '1.4rem',
-            color: '#1a1a1a',
-            letterSpacing: '4px',
-            marginTop: '4px',
-          }}>
-            JUNK REMOVAL
-          </span>
-        </Link>
+<Link to="/" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: 1 }}>
+  <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+    {'Jokers'.split('').map((letter, i) => {
+      const rotations = [-5, 4, -3, 6, -2, 3];
+      const rises = [3, -4, 2, -5, 3, -2];
+      return (
+        <span key={i} style={{
+          display: 'inline-block',
+          fontFamily: "'Fredoka One', cursive",
+          fontSize: '2.6rem',
+          color: '#7B2D8B',
+          WebkitTextStroke: '1.5px #1a1a1a',
+          paintOrder: 'stroke fill',
+          transform: `rotate(${rotations[i]}deg) translateY(${rises[i]}px)`,
+          transformOrigin: 'bottom center',
+          fontWeight: '400',
+        }}>
+          {letter}
+        </span>
+      );
+    })}
+  </span>
+  <span style={{
+    fontFamily: "'Fredoka One', sans-serif",
+    fontSize: '1.3rem',
+    color: '#2d7a3a',
+    WebkitTextStroke: '1px #1a1a1a',
+    paintOrder: 'stroke fill',
+    letterSpacing: '5px',
+    marginTop: '2px',
+  }}>
+    JUNK REMOVAL
+  </span>
+</Link>
 
         {/* RIGHT — Phone */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }} className="nav-cta-desktop">
