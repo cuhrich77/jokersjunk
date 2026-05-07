@@ -27,7 +27,7 @@ export default function Services() {
           <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:28}}>
             {SERVICES.map(s=>(
               <div key={s.title} style={{background:'#fff',border:'1.5px solid #e8e8e8',borderRadius:20,padding:36,display:'flex',gap:22,alignItems:'flex-start',transition:'all .3s'}}
-                onMouseEnter={e=>{e.currentTarget.style.borderColor='#ff6a00';e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow='0 4px 24px rgba(255,106,0,.10)';}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor='##7B2D8B';e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow='0 4px 24px rgba(255,106,0,.10)';}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor='#e8e8e8';e.currentTarget.style.transform='translateY(0)';e.currentTarget.style.boxShadow='none';}}>
                 <div style={{fontSize:'2.6rem',minWidth:56}}>{s.icon}</div>
                 <div>
@@ -36,7 +36,7 @@ export default function Services() {
                   <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:5}}>
                     {s.items.map(i=>(
                       <li key={i} style={{fontSize:'.86rem',color:'#555',display:'flex',gap:8,alignItems:'center'}}>
-                        <span style={{color:'#ff6a00',fontWeight:700}}>✓</span>{i}
+                        <span style={{color:'##7B2D8B',fontWeight:700}}>✓</span>{i}
                       </li>
                     ))}
                   </ul>
