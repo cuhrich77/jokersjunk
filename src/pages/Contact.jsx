@@ -22,7 +22,7 @@ export default function Contact() {
                   {icon:'📍',label:'Service Area',val:'NE Florida',href:null},
                 ].map(m=>(
                   <div key={m.label} style={{display:'flex',gap:16,alignItems:'center'}}>
-                    <div style={{width:52,height:52,minWidth:52,background:'#2d7a3a:',borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.4rem'}}>{m.icon}</div>
+                    <div style={{width:52,height:52,minWidth:52,background:'#d1fae5',borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.4rem'}}>{m.icon}</div>
                     <div>
                       <div style={{fontSize:'.78rem',color:'#999',fontWeight:500,textTransform:'uppercase',letterSpacing:'.5px'}}>{m.label}</div>
                       {m.href
