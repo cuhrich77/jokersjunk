@@ -8,15 +8,16 @@ const SERVICES = [{icon:'🛋️',title:'Furniture Removal',desc:'Sofas, beds, d
 const REVIEWS = [{text:'"Booked at 8am, at my door by 11. Cleared my entire garage in under an hour!"',name:'James R.',loc:'Tampa, FL',av:'JR',color:'#ff6a00'},{text:'"Fair price, professional crew, swept up afterwards. Used them twice!"',name:'Sandra M.',loc:'Orlando, FL',av:'SM',color:'#0077b6'},{text:'"Estate cleanout after my mom passed. Kind, efficient, removed everything."',name:'David L.',loc:'Fort Lauderdale, FL',av:'DL',color:'#2d6a1a'}];
 
 export default function Home() {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 16px 0' }}>
-  <img
-    src="/Jokersjunklogo1.png"
-    alt="Jokers Junk Removal"
-    style={{ height: '160px', width: 'auto' }}
-  />
-</div>
+return (
     <>
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '96px 16px 0' }}>
+        <img
+          src="/Jokersjunklogo1.png"
+          alt="Jokers Junk Removal"
+          style={{ height: '160px', width: 'auto' }}
+        />
+      </div>
+
       {/* HERO */}
       <section style={{paddingTop:72,minHeight:'100vh',background:'linear-gradient(135deg,#fff 0%,#f0f9f2 50%,#fff 100%)',display:'flex',alignItems:'center'}}>
         <div className="container" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'center',padding:'80px 24px',width:'100%'}}>
