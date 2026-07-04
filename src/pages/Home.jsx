@@ -9,15 +9,7 @@ const REVIEWS = [{text:'"Booked at 8am, at my door by 11. Cleared my entire gara
 
 export default function Home() {
 return (
-    <>
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '96px 16px 0' }}>
-        <img
-          src="/Jokersjunklogo1.png"
-          alt="Jokers Junk Removal"
-          style={{ height: '160px', width: 'auto' }}
-        />
-      </div>
-
+  
       {/* HERO */}
       <section style={{paddingTop:72,minHeight:'100vh',background:'linear-gradient(135deg,#fff 0%,#f0f9f2 50%,#fff 100%)',display:'flex',alignItems:'center'}}>
         <div className="container" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'center',padding:'80px 24px',width:'100%'}}>
