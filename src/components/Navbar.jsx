@@ -44,7 +44,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
           <img
-            src="/Jokersjunklogo1.png"
+            src="/Mainjokerlogo.jpg"
             alt="Jokers Junk Removal"
             style={{ height: '60px', width: 'auto', display: 'block' }}
           />
