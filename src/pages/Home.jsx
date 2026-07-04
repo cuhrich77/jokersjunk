@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 16px 0' }}>
   <img
-    src="/jokersjunklogo.jpg"
+    src="/Jokersjunklogo.png"
     alt="Jokers Junk Removal"
     style={{ height: '160px', width: 'auto' }}
   />
