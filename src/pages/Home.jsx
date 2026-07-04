@@ -13,7 +13,12 @@ return (
       {/* HERO */}
       <section style={{paddingTop:72,minHeight:'100vh',background:'linear-gradient(135deg,#fff 0%,#f0f9f2 50%,#fff 100%)',display:'flex',alignItems:'center'}}>
         <div className="container" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'center',padding:'80px 24px',width:'100%'}}>
-          <div>
+         <div>
+            <img
+              src="/Jokersjunklogo1.png"
+              alt="Jokers Junk Removal"
+              style={{ height: '260px', width: 'auto', marginBottom: 16, display: 'block' }}
+            />
             <div style={{display:'inline-flex',alignItems:'center',gap:8, background:'#f0f9f2',border:'1.5px solid rgba(45,122,58,.2)',borderRadius:50,padding:'8px 18px',marginBottom:24,fontSize:'.88rem',fontWeight:600,color:'#2d7a3a'}}>
               <span style={{width:8,height:8,background:'#ff6a00',borderRadius:'50%',display:'inline-block'}}/>
               Florida's #1 Junk Removal
