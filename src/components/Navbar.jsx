@@ -42,10 +42,8 @@ export default function Navbar() {
         width: '100%',
       }}>
 
-        {/* LEFT — Logo */}
-        <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-          <img src="/Jokersjunklogo1.png" alt="logo" style={{ height: '100px', width: 'auto' }} />
-        </Link>
+       {/* LEFT — empty spacer keeps center logo centered */}
+<div />
 
         {/* CENTER — New Logo Image */}
 <Link to="/" style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
