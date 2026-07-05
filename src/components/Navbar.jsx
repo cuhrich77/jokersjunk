@@ -46,7 +46,7 @@ export default function Navbar() {
           <img
             src="/Jokerlogo2.png"
             alt="Jokers Junk Removal"
-            style={{ height: '60px', width: 'auto', display: 'block' }}
+            style={{ height: '85px', width: 'auto', display: 'block' }}
           />
         </Link>
 
