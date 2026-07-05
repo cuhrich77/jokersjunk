@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { saveLead } from '../lib/supabase';
+import { saveLead, supabase } from '../lib/supabase';
 import { createHubSpotContact } from '../lib/hubspot';
 
 const SERVICES = [
@@ -46,6 +46,7 @@ const G  = '#2d7a3a';
 const P  = '#7b2d8b';
 const GL = '#f0f9f2';
 const PL = '#f9f0fb';
+const MAX_PHOTOS = 5;
 const today = new Date();
 today.setHours(0,0,0,0);
 
@@ -204,17 +205,55 @@ export default function QuoteForm({ compact = false }) {
   const [step,       setStep]       = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted,  setSubmitted]  = useState(false);
+  const [photos,     setPhotos]     = useState([]); // [{ file, preview }]
   const [form,       setForm]       = useState({
     type:'Home', zip:'', service:'', day:null, timeSlot:null,
     firstName:'', lastName:'', phone:'', email:'', address:'', message:'',
   });
 
   const set       = (key, val) => setForm(f => ({...f, [key]: val}));
- const canNext1 = form.zip.length >= 5 && form.service && SERVICE_ZIPS.has(form.zip); 
+  const canNext1  = form.zip.length >= 5 && form.service && SERVICE_ZIPS.has(form.zip);
   const canNext2  = form.day !== null && form.timeSlot !== null;
   const canSubmit = form.firstName && form.phone && form.address;
 
+  const addPhotos = (e) => {
+    const files = Array.from(e.target.files || []);
+    const remaining = MAX_PHOTOS - photos.length;
+    const accepted = files
+      .slice(0, remaining)
+      .filter(f => f.type.startsWith('image/') && f.size <= 10 * 1024 * 1024);
+    setPhotos(p => [...p, ...accepted.map(f => ({ file: f, preview: URL.createObjectURL(f) }))]);
+    e.target.value = '';
+  };
+
+  const removePhoto = (idx) => {
+    setPhotos(p => {
+      URL.revokeObjectURL(p[idx].preview);
+      return p.filter((_, i) => i !== idx);
+    });
+  };
+
+  const uploadPhotos = async () => {
+    const urls = [];
+    for (const p of photos) {
+      try {
+        const ext = (p.file.name.split('.').pop() || 'jpg').toLowerCase();
+        const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const { error } = await supabase.storage.from('quote-photos').upload(path, p.file);
+        if (!error) {
+          const { data } = supabase.storage.from('quote-photos').getPublicUrl(path);
+          if (data?.publicUrl) urls.push(data.publicUrl);
+        }
+      } catch (err) {
+        console.error('Photo upload failed:', err);
+      }
+    }
+    return urls;
+  };
+
   const resetForm = () => {
+    photos.forEach(p => URL.revokeObjectURL(p.preview));
+    setPhotos([]);
     setSubmitted(false); setStep(1);
     setForm({type:'Home',zip:'',service:'',day:null,timeSlot:null,firstName:'',lastName:'',phone:'',email:'',address:'',message:''});
   };
@@ -222,6 +261,10 @@ export default function QuoteForm({ compact = false }) {
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
+      // Upload photos first (skips gracefully if none)
+      const photoUrls = await uploadPhotos();
+      const photoNote = photoUrls.length ? ' | Photos: ' + photoUrls.join(' ') : '';
+
       await createHubSpotContact(form);
       const { error } = await saveLead({
         firstName:    form.firstName,
@@ -231,25 +274,25 @@ export default function QuoteForm({ compact = false }) {
         address:      form.address,
         serviceType:  form.service,
         scheduledFor: form.day?.full + ' - ' + form.timeSlot,
-        message:      form.type + ' customer. ZIP: ' + form.zip + '. ' + form.message,
+        message:      form.type + ' customer. ZIP: ' + form.zip + '. ' + form.message + photoNote,
       });
       if (error) throw error;
-      // After saveLead succeeds, add this:
-await fetch('/api/notify', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    firstName: form.firstName,
-    lastName: form.lastName,
-    phone: form.phone,
-    email: form.email,
-    address: form.address,
-    serviceType: form.service,
-    scheduledFor: form.day?.full + ' - ' + (TIME_SLOTS.find(t=>t.id===form.timeSlot)?.label || ''),
-    message: form.message,
-    type: form.type,
-  }),
-});
+      await fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          phone: form.phone,
+          email: form.email,
+          address: form.address,
+          serviceType: form.service,
+          scheduledFor: form.day?.full + ' - ' + (TIME_SLOTS.find(t=>t.id===form.timeSlot)?.label || ''),
+          message: form.message + photoNote,
+          type: form.type,
+          photos: photoUrls,
+        }),
+      });
       setSubmitted(true);
     } catch (err) {
       console.error(err);
@@ -271,6 +314,9 @@ await fetch('/api/notify', {
         <div style={{fontSize:'.95rem',color:'#555'}}>{form.day?.full}</div>
         <div style={{fontSize:'.95rem',color:'#555'}}>{TIME_SLOTS.find(t=>t.id===form.timeSlot)?.icon} {TIME_SLOTS.find(t=>t.id===form.timeSlot)?.label} · {TIME_SLOTS.find(t=>t.id===form.timeSlot)?.time}</div>
         <div style={{fontSize:'.85rem',color:'#999',marginTop:4}}>{form.service} · {form.type}</div>
+        {photos.length > 0 && (
+          <div style={{fontSize:'.85rem',color:G,marginTop:6,fontWeight:600}}>📷 {photos.length} photo{photos.length>1?'s':''} sent — we'll review and get back with your estimate!</div>
+        )}
       </div>
       <a href="tel:9043341521" style={{display:'block',fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.5rem',fontWeight:700,color:G,margin:'16px 0'}}>
         📞 (904) 334-1521
@@ -319,14 +365,13 @@ await fetch('/api/notify', {
             <label style={{display:'block',fontSize:'.85rem',fontWeight:600,marginBottom:6}}>ZIP Code <span style={{color:G}}>*</span></label>
             <input type="number" placeholder="32084" value={form.zip} onChange={e=>set('zip',e.target.value)}
               style={{width:'100%',padding:'14px 16px',border:'2px solid '+(form.zip.length>=5?G:'#e8e8e8'),borderRadius:12,fontSize:'1.1rem',fontFamily:'Barlow Condensed,sans-serif',fontWeight:700,letterSpacing:4,outline:'none',transition:'border .2s'}}/>
-{form.zip.length>=5 && SERVICE_ZIPS.has(form.zip) && (
-  <div style={{color:G,fontSize:'.85rem',fontWeight:600,marginTop:6}}>✅ We serve your area!</div>
-)}
-{form.zip.length>=5 && !SERVICE_ZIPS.has(form.zip) && (
-  <div style={{color:'#dc2626',fontSize:'.85rem',fontWeight:600,marginTop:6}}>❌ Sorry, we don't serve this ZIP. We cover Jacksonville, Saint Augustine, Palatka, Lake City, Callahan and Yulee.</div>
-)}
-  
-     </div>
+            {form.zip.length>=5 && SERVICE_ZIPS.has(form.zip) && (
+              <div style={{color:G,fontSize:'.85rem',fontWeight:600,marginTop:6}}>✅ We serve your area!</div>
+            )}
+            {form.zip.length>=5 && !SERVICE_ZIPS.has(form.zip) && (
+              <div style={{color:'#dc2626',fontSize:'.85rem',fontWeight:600,marginTop:6}}>❌ Sorry, we don't serve this ZIP. We cover Jacksonville, Saint Augustine, Palatka, Lake City, Callahan and Yulee.</div>
+            )}
+          </div>
           <div style={{marginBottom:24}}>
             <label style={{display:'block',fontSize:'.85rem',fontWeight:600,marginBottom:10}}>What do you need hauled? <span style={{color:G}}>*</span></label>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
@@ -413,16 +458,40 @@ await fetch('/api/notify', {
             <label style={{display:'block',fontSize:'.82rem',fontWeight:600,marginBottom:5}}>Service Address <span style={{color:G}}>*</span></label>
             <AddressAutocomplete value={form.address} onChange={v=>set('address',v)}/>
           </div>
-          <div style={{marginBottom:20}}>
+          <div style={{marginBottom:14}}>
             <label style={{display:'block',fontSize:'.82rem',fontWeight:600,marginBottom:5}}>Additional Notes (Optional)</label>
             <textarea value={form.message} onChange={e=>set('message',e.target.value)}
               placeholder="Describe what needs hauling, access notes, etc."
               style={{width:'100%',padding:'12px 14px',border:'2px solid #e8e8e8',borderRadius:10,fontSize:'.95rem',outline:'none',height:80,resize:'none'}}/>
           </div>
+
+          {/* PHOTO UPLOAD */}
+          <div style={{marginBottom:20}}>
+            <label style={{display:'block',fontSize:'.82rem',fontWeight:600,marginBottom:5}}>📷 Photos of Your Junk (Optional)</label>
+            <p style={{fontSize:'.78rem',color:'#999',marginBottom:8,lineHeight:1.5}}>
+              Snap a few pics — most estimates can be sent without a site visit! Up to {MAX_PHOTOS} photos.
+            </p>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:8}}>
+              {photos.map((p, i) => (
+                <div key={p.preview} style={{position:'relative',aspectRatio:'1',borderRadius:10,overflow:'hidden',border:'2px solid '+G}}>
+                  <img src={p.preview} alt={'Photo '+(i+1)} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+                  <button onClick={()=>removePhoto(i)} style={{position:'absolute',top:2,right:2,width:20,height:20,borderRadius:'50%',border:'none',background:'rgba(0,0,0,.65)',color:'#fff',fontSize:'.7rem',cursor:'pointer',lineHeight:1,display:'flex',alignItems:'center',justifyContent:'center'}}>✕</button>
+                </div>
+              ))}
+              {photos.length < MAX_PHOTOS && (
+                <label htmlFor="quote-photo-input" style={{aspectRatio:'1',borderRadius:10,border:'2px dashed #ccc',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',cursor:'pointer',color:'#999',fontSize:'1.4rem',background:'#fafafa',transition:'all .2s'}}>
+                  +
+                  <span style={{fontSize:'.6rem',fontWeight:600}}>Add</span>
+                </label>
+              )}
+            </div>
+            <input id="quote-photo-input" type="file" accept="image/*" multiple onChange={addPhotos} style={{display:'none'}}/>
+          </div>
+
           <div style={{display:'flex',gap:12}}>
             <button onClick={()=>setStep(2)} style={back}>← Back</button>
             <button onClick={handleSubmit} disabled={!canSubmit||submitting} style={{...(canSubmit&&!submitting?btnOn:btnOff),flex:2}}>
-              {submitting?'Booking...':'🚛 Book My Estimate →'}
+              {submitting ? (photos.length ? 'Uploading photos...' : 'Booking...') : '🚛 Book My Estimate →'}
             </button>
           </div>
           <p style={{textAlign:'center',fontSize:'.78rem',color:'#aaa',marginTop:10}}>No credit card needed · Free estimate · Cancel anytime</p>
