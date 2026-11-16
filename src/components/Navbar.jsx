@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../lib/AuthContext';
 
 const LINKS = [
   { path: '/', label: 'Home' },
@@ -12,6 +13,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -31,9 +33,17 @@ export default function Navbar() {
             Serving Northeast Florida — St. Augustine • Jacksonville • Palatka
           </span>
           <span style={{ display: 'flex', gap: 16, alignItems: 'center', whiteSpace: 'nowrap' }}>
-            {/* TODO: wire these to Supabase Auth */}
-            <a href="#signin" style={{ color: '#fff', fontWeight: 600, textDecoration: 'none' }}>Sign In</a>
-            <a href="#signup" style={{ color: '#fff', fontWeight: 700, textDecoration: 'none', background: 'rgba(255,255,255,.18)', padding: '4px 14px', borderRadius: 20 }}>Create Account</a>
+            {user ? (
+              <>
+                <button onClick={signOut} style={{ background: 'none', border: 'none', color: '#fff', fontWeight: 600, cursor: 'pointer', fontSize: '.82rem', padding: 0 }}>Sign Out</button>
+                <Link to="/account" style={{ color: '#fff', fontWeight: 700, textDecoration: 'none', background: 'rgba(255,255,255,.18)', padding: '4px 14px', borderRadius: 20 }}>My Account</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/signin" style={{ color: '#fff', fontWeight: 600, textDecoration: 'none' }}>Sign In</Link>
+                <Link to="/signup" style={{ color: '#fff', fontWeight: 700, textDecoration: 'none', background: 'rgba(255,255,255,.18)', padding: '4px 14px', borderRadius: 20 }}>Create Account</Link>
+              </>
+            )}
           </span>
         </div>
       </div>
@@ -99,8 +109,17 @@ export default function Navbar() {
             </Link>
           ))}
           <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
-            <a href="#signin" style={{ flex: 1, textAlign: 'center', padding: '10px 0', border: '2px solid #2d7a3a', borderRadius: 8, color: '#2d7a3a', fontWeight: 700, textDecoration: 'none' }}>Sign In</a>
-            <a href="#signup" style={{ flex: 1, textAlign: 'center', padding: '10px 0', background: '#2d7a3a', borderRadius: 8, color: '#fff', fontWeight: 700, textDecoration: 'none' }}>Create Account</a>
+            {user ? (
+              <>
+                <button onClick={signOut} style={{ flex: 1, padding: '10px 0', border: '2px solid #2d7a3a', borderRadius: 8, color: '#2d7a3a', fontWeight: 700, background: '#fff', fontSize: '1rem', cursor: 'pointer' }}>Sign Out</button>
+                <Link to="/account" style={{ flex: 1, textAlign: 'center', padding: '10px 0', background: '#2d7a3a', borderRadius: 8, color: '#fff', fontWeight: 700, textDecoration: 'none' }}>My Account</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/signin" style={{ flex: 1, textAlign: 'center', padding: '10px 0', border: '2px solid #2d7a3a', borderRadius: 8, color: '#2d7a3a', fontWeight: 700, textDecoration: 'none' }}>Sign In</Link>
+                <Link to="/signup" style={{ flex: 1, textAlign: 'center', padding: '10px 0', background: '#2d7a3a', borderRadius: 8, color: '#fff', fontWeight: 700, textDecoration: 'none' }}>Create Account</Link>
+              </>
+            )}
           </div>
           <Link to="/contact" style={{ marginTop: 10, textAlign: 'center', background: '#7b2d8b', color: '#fff', fontWeight: 700, textDecoration: 'none', padding: '12px 0', borderRadius: 8 }}>📦 Book Now</Link>
           <a href="tel:9043341521" style={{ textAlign: 'center', fontWeight: 700, color: '#2d7a3a', padding: '10px 0', textDecoration: 'none' }}>📞 (904) 334-1521</a>
