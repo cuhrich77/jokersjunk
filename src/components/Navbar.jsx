@@ -79,7 +79,7 @@ export default function Navbar() {
           <a href="tel:9043341521" style={{ fontWeight: 800, color: '#2d7a3a', textDecoration: 'none', fontSize: '1.05rem' }}>
             📞 (904) 334-1521
           </a>
-          <Link to="/contact" style={{
+          <Link to={user ? '/account' : '/contact'} style={{
             background: '#7b2d8b', color: '#fff', fontWeight: 700, textDecoration: 'none',
             padding: '12px 22px', borderRadius: 8, fontSize: '.95rem',
           }}>
@@ -121,7 +121,7 @@ export default function Navbar() {
               </>
             )}
           </div>
-          <Link to="/contact" style={{ marginTop: 10, textAlign: 'center', background: '#7b2d8b', color: '#fff', fontWeight: 700, textDecoration: 'none', padding: '12px 0', borderRadius: 8 }}>📦 Book Now</Link>
+          <Link to={user ? '/account' : '/contact'} style={{ marginTop: 10, textAlign: 'center', background: '#7b2d8b', color: '#fff', fontWeight: 700, textDecoration: 'none', padding: '12px 0', borderRadius: 8 }}>📦 Book Now</Link>
           <a href="tel:9043341521" style={{ textAlign: 'center', fontWeight: 700, color: '#2d7a3a', padding: '10px 0', textDecoration: 'none' }}>📞 (904) 334-1521</a>
         </div>
       )}

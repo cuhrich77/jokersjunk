@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { saveLead, supabase } from '../lib/supabase';
 import { createHubSpotContact } from '../lib/hubspot';
 
@@ -50,7 +50,7 @@ const MAX_PHOTOS = 5;
 const today = new Date();
 today.setHours(0,0,0,0);
 
-function AddressAutocomplete({ value, onChange }) {
+export function AddressAutocomplete({ value, onChange }) {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -94,7 +94,7 @@ function AddressAutocomplete({ value, onChange }) {
         style={{
           width:'100%', padding:'12px 14px',
           border:`2px solid ${value ? G : '#e8e8e8'}`,
-          borderRadius:10, fontSize:'.95rem', outline:'none', transition:'border .2s'
+          borderRadius:10, fontSize:'16px', outline:'none', transition:'border .2s', boxSizing:'border-box'
         }}
       />
       {loading && (
@@ -201,7 +201,7 @@ function CalendarPicker({ selected, onSelect }) {
   );
 }
 
-export default function QuoteForm({ compact = false }) {
+export default function QuoteForm({ compact = false, prefill = null }) {
   const [step,       setStep]       = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted,  setSubmitted]  = useState(false);
@@ -210,6 +210,20 @@ export default function QuoteForm({ compact = false }) {
     type:'Home', zip:'', service:'', day:null, timeSlot:null,
     firstName:'', lastName:'', phone:'', email:'', address:'', message:'',
   });
+
+  // Signed-in customers: fill in what we already know about them
+  useEffect(() => {
+    if (!prefill) return;
+    setForm(f => ({
+      ...f,
+      firstName: f.firstName || prefill.firstName || '',
+      lastName:  f.lastName  || prefill.lastName  || '',
+      phone:     f.phone     || prefill.phone     || '',
+      email:     f.email     || prefill.email     || '',
+      address:   f.address   || prefill.address   || '',
+      zip:       f.zip       || prefill.zip       || '',
+    }));
+  }, [prefill]);
 
   const set       = (key, val) => setForm(f => ({...f, [key]: val}));
   const canNext1  = form.zip.length >= 5 && form.service && SERVICE_ZIPS.has(form.zip);
@@ -255,7 +269,7 @@ export default function QuoteForm({ compact = false }) {
     photos.forEach(p => URL.revokeObjectURL(p.preview));
     setPhotos([]);
     setSubmitted(false); setStep(1);
-    setForm({type:'Home',zip:'',service:'',day:null,timeSlot:null,firstName:'',lastName:'',phone:'',email:'',address:'',message:''});
+    setForm({type:'Home',zip:prefill?.zip||'',service:'',day:null,timeSlot:null,firstName:prefill?.firstName||'',lastName:prefill?.lastName||'',phone:prefill?.phone||'',email:prefill?.email||'',address:prefill?.address||'',message:''});
   };
 
   const handleSubmit = async () => {

@@ -27,10 +27,10 @@ export function Field({ label, ...props }) {
   );
 }
 
-export default function AuthCard({ title, subtitle, children }) {
+export default function AuthCard({ title, subtitle, children, maxWidth = 440 }) {
   return (
     <section style={{ minHeight: '80vh', padding: '180px 16px 60px', background: '#f4f8f4', display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: 440, alignSelf: 'flex-start', background: '#fff', borderRadius: 16, boxShadow: '0 8px 30px rgba(0,0,0,.08)', padding: '32px 28px', borderTop: '5px solid ' + P }}>
+      <div style={{ width: '100%', maxWidth, alignSelf: 'flex-start', background: '#fff', borderRadius: 16, boxShadow: '0 8px 30px rgba(0,0,0,.08)', padding: '32px 28px', borderTop: '5px solid ' + P }}>
         <h1 style={{ fontSize: '1.8rem', margin: '0 0 6px', color: '#222' }}>{title}</h1>
         {subtitle && <p style={{ color: '#777', margin: '0 0 24px', fontSize: '.95rem' }}>{subtitle}</p>}
         {children}
