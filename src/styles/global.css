@@ -80,3 +80,13 @@ textarea.form-control { height: 110px; resize: none; }
 .footer-grid > * { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
 @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+/* About page: side-by-side on desktop, stacked on phones */
+.about-intro { display: grid; grid-template-columns: 1fr 1.4fr; gap: 72px; }
+.about-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.about-intro > *, .about-values > * { min-width: 0; }
+@media (max-width: 900px) {
+  .about-intro { grid-template-columns: 1fr; gap: 40px; }
+  .about-values { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) { .about-values { grid-template-columns: 1fr; } }

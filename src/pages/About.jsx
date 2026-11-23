@@ -21,9 +21,9 @@ export default function About() {
 
       <section className="section">
         <div className="container">
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:72,alignItems:'center',marginBottom:80}}>
+          <div className="about-intro" style={{alignItems:'center',marginBottom:80}}>
             <div style={{background:'linear-gradient(135deg,#f0f9f2,#fff)',borderRadius:24,padding:'60px 40px',textAlign:'center',border:'2px solid rgba(45,122,58,.15)'}}>
-              <div style={{fontSize:'5rem',marginBottom:20}}>🗑️</div>
+              <img src="/Jokerlogo2.png" alt="Jokers Junk Removal logo" style={{width:'100%',maxWidth:260,height:'auto',display:'block',margin:'0 auto 20px'}}/>
               <h3 style={{fontSize:'1.6rem',marginBottom:8}}>Est. 2018 · Florida</h3>
               <p style={{color:'#555'}}>Family-owned & operated</p>
               <p style={{color:'#2d7a3a',fontWeight:600,marginTop:8}}>10,000+ loads hauled 🚛</p>
@@ -47,7 +47,7 @@ export default function About() {
             <div className="tag">What We Stand For</div>
             <h2 className="section-title">Our Core Values</h2>
           </div>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:24}}>
+          <div className="about-values">
             {VALUES.map(v=>(
               <div key={v.title} style={{textAlign:'center',padding:'36px 24px',background:'#fff',border:'1.5px solid #e8e8e8',borderRadius:20,transition:'all .3s'}}
                 onMouseEnter={e=>{e.currentTarget.style.borderColor='#2d7a3a';e.currentTarget.style.transform='translateY(-4px)';}}
