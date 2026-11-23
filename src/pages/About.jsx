@@ -23,10 +23,10 @@ export default function About() {
         <div className="container">
           <div className="about-intro" style={{alignItems:'center',marginBottom:80}}>
             <div style={{background:'linear-gradient(135deg,#f0f9f2,#fff)',borderRadius:24,padding:'60px 40px',textAlign:'center',border:'2px solid rgba(45,122,58,.15)'}}>
-              <img src="/Jokerlogo2.png" alt="Jokers Junk Removal logo" style={{width:'100%',maxWidth:260,height:'auto',display:'block',margin:'0 auto 20px'}}/>
-              <h3 style={{fontSize:'1.6rem',marginBottom:8}}>Est. 2018 · Florida</h3>
-              <p style={{color:'#555'}}>Family-owned & operated</p>
-              <p style={{color:'#2d7a3a',fontWeight:600,marginTop:8}}>10,000+ loads hauled 🚛</p>
+              <img src="/joker-truck.png" alt="Jokers Junk Removal truck with the Joker driving" style={{width:'100%',maxWidth:320,height:'auto',display:'block',margin:'0 auto 20px'}}/>
+              <h3 style={{fontSize:'1.6rem',marginBottom:8}}>Est. 2025 · Florida</h3>
+              <p style={{color:'#555'}}>Serving Northeast Florida</p>
+              <p style={{color:'#2d7a3a',fontWeight:600,marginTop:8}}>Locally owned & operated 🚛</p>
             </div>
             <div>
               <h2 style={{fontSize:'2.4rem',marginBottom:20}}>
