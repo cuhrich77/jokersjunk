@@ -22,15 +22,15 @@ export default function About() {
       <section className="section">
         <div className="container">
           <div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:72,alignItems:'center',marginBottom:80}}>
-            <div style={{background:'linear-gradient(135deg,#fff4ed,#fff)',borderRadius:24,padding:'60px 40px',textAlign:'center',border:'2px solid rgba(255,106,0,.15)'}}>
+            <div style={{background:'linear-gradient(135deg,#f0f9f2,#fff)',borderRadius:24,padding:'60px 40px',textAlign:'center',border:'2px solid rgba(45,122,58,.15)'}}>
               <div style={{fontSize:'5rem',marginBottom:20}}>🗑️</div>
               <h3 style={{fontSize:'1.6rem',marginBottom:8}}>Est. 2018 · Florida</h3>
               <p style={{color:'#555'}}>Family-owned & operated</p>
-              <p style={{color:'#ff6a00',fontWeight:600,marginTop:8}}>10,000+ loads hauled 🚛</p>
+              <p style={{color:'#2d7a3a',fontWeight:600,marginTop:8}}>10,000+ loads hauled 🚛</p>
             </div>
             <div>
               <h2 style={{fontSize:'2.4rem',marginBottom:20}}>
-                We Started With <span style={{color:'#ff6a00'}}>One Truck</span> and a Big Idea
+                We Started With <span style={{color:'#2d7a3a'}}>One Truck</span> and a Big Idea
               </h2>
               <p style={{color:'#555',lineHeight:1.8,marginBottom:14}}>Jokers Junk Removal was started by Florida native Chris Uhrich in 2025 after noticing how hard it was for homeowners and landlords to get reliable, affordable junk removal.</p>
               <p style={{color:'#555',lineHeight:1.8,marginBottom:14}}>With a single pickup truck and a passion for helping his community, Chris built Jokers Junk Removal from the ground up. Today we operate proudly across Northeast Florida and have helped many customers get rid of their junk.</p>
@@ -50,7 +50,7 @@ export default function About() {
           <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:24}}>
             {VALUES.map(v=>(
               <div key={v.title} style={{textAlign:'center',padding:'36px 24px',background:'#fff',border:'1.5px solid #e8e8e8',borderRadius:20,transition:'all .3s'}}
-                onMouseEnter={e=>{e.currentTarget.style.borderColor='#ff6a00';e.currentTarget.style.transform='translateY(-4px)';}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor='#2d7a3a';e.currentTarget.style.transform='translateY(-4px)';}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor='#e8e8e8';e.currentTarget.style.transform='translateY(0)';}}>
                 <div style={{fontSize:'2.4rem',marginBottom:14}}>{v.icon}</div>
                 <h3 style={{fontSize:'1.15rem',marginBottom:10}}>{v.title}</h3>

@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer style={{background:'#1a1a1a',color:'#ccc',padding:'64px 0 32px'}}>
       <div className="container">
-        <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',gap:48,marginBottom:48}}>
+        <div className="footer-grid" style={{marginBottom:48}}>
           <div>
             <div style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.9rem',fontWeight:900,color:'#fff',marginBottom:14}}>
               JOKERS <span style={{color:'#2d7a3a'}}>JUNK</span> REMOVAL 
@@ -17,7 +17,7 @@ export default function Footer() {
             <div style={{display:'flex',flexDirection:'column',gap:10}}>
               {['Furniture Removal','Home Cleanouts','Appliance Removal','Yard Waste','Construction Debris','Commercial Junk'].map(s=>(
                 <Link key={s} to="/services" style={{color:'#999',fontSize:'.88rem',transition:'color .2s'}}
-                  onMouseEnter={e=>e.target.style.color='#ff6a00'}
+                  onMouseEnter={e=>e.target.style.color='#4fae5f'}
                   onMouseLeave={e=>e.target.style.color='#999'}>{s}</Link>
               ))}
             </div>
@@ -41,7 +41,7 @@ export default function Footer() {
               <div style={{fontSize:'.72rem',color:'#666',fontWeight:600,letterSpacing:'.5px',marginBottom:4}}>HOURS</div>
               <div>Mon–Fri: 7am–7pm</div>
               <div>Sat: 8am–6pm</div>
-              <div style={{color:'#ff6a00',fontWeight:600}}>Same-Day Available!</div>
+              <div style={{color:'#4fae5f',fontWeight:700}}>Same-Day Available!</div>
             </div>
           </div>
         </div>
