@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { saveLead, supabase } from '../lib/supabase';
 import { createHubSpotContact } from '../lib/hubspot';
+import LoadEstimator from './LoadEstimator';
+import { loadEstimate, saveEstimate, clearEstimate, money, PRICING } from '../lib/estimate';
 
 const SERVICES = [
   'Furniture Removal','Home / Estate Cleanout','Appliance Removal',
@@ -206,6 +208,8 @@ export default function QuoteForm({ compact = false, prefill = null }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted,  setSubmitted]  = useState(false);
   const [photos,     setPhotos]     = useState([]); // [{ file, preview }]
+  const [estimate,   setEstimate]   = useState(() => loadEstimate()); // from the /pricing estimator
+  const [showEst,    setShowEst]    = useState(false);
   const [form,       setForm]       = useState({
     type:'Home', zip:'', service:'', day:null, timeSlot:null,
     firstName:'', lastName:'', phone:'', email:'', address:'', message:'',
@@ -268,7 +272,7 @@ export default function QuoteForm({ compact = false, prefill = null }) {
   const resetForm = () => {
     photos.forEach(p => URL.revokeObjectURL(p.preview));
     setPhotos([]);
-    setSubmitted(false); setStep(1);
+    setSubmitted(false); setStep(1); setEstimate(null); setShowEst(false);
     setForm({type:'Home',zip:prefill?.zip||'',service:'',day:null,timeSlot:null,firstName:prefill?.firstName||'',lastName:prefill?.lastName||'',phone:prefill?.phone||'',email:prefill?.email||'',address:prefill?.address||'',message:''});
   };
 
@@ -278,6 +282,7 @@ export default function QuoteForm({ compact = false, prefill = null }) {
       // Upload photos first (skips gracefully if none)
       const photoUrls = await uploadPhotos();
       const photoNote = photoUrls.length ? ' | Photos: ' + photoUrls.join(' ') : '';
+      const estNote   = estimate ? ' | Online estimate: ' + estimate.summary : '';
 
       await createHubSpotContact(form);
       const { error } = await saveLead({
@@ -288,7 +293,7 @@ export default function QuoteForm({ compact = false, prefill = null }) {
         address:      form.address,
         serviceType:  form.service,
         scheduledFor: form.day?.full + ' - ' + form.timeSlot,
-        message:      form.type + ' customer. ZIP: ' + form.zip + '. ' + form.message + photoNote,
+        message:      form.type + ' customer. ZIP: ' + form.zip + '. ' + form.message + estNote + photoNote,
       });
       if (error) throw error;
       await fetch('/api/notify', {
@@ -305,8 +310,10 @@ export default function QuoteForm({ compact = false, prefill = null }) {
           message: form.message + photoNote,
           type: form.type,
           photos: photoUrls,
+          estimate: estimate ? estimate.summary : '',
         }),
       });
+      clearEstimate();
       setSubmitted(true);
     } catch (err) {
       console.error(err);
@@ -368,6 +375,34 @@ export default function QuoteForm({ compact = false, prefill = null }) {
         <div>
           <h3 style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.6rem',marginBottom:4}}>Check Availability</h3>
           <p style={{color:'#999',fontSize:'.88rem',marginBottom:24}}>Enter your ZIP code to get started</p>
+          {estimate ? (
+            <div style={{background:GL,borderRadius:14,padding:'14px 16px',marginBottom:20,border:'1.5px solid rgba(45,122,58,.25)'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',gap:8}}>
+                <div style={{fontSize:'.75rem',fontWeight:700,color:G,textTransform:'uppercase',letterSpacing:'.06em'}}>💰 Your estimate</div>
+                <button type="button" onClick={()=>{clearEstimate();setEstimate(null);}} style={{background:'none',border:'none',color:'#999',fontSize:'.8rem',cursor:'pointer',textDecoration:'underline'}}>Remove</button>
+              </div>
+              <div style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.6rem',fontWeight:900,color:G,lineHeight:1.1}}>{money(estimate.low)} – {money(estimate.high)}</div>
+              <div style={{fontSize:'.82rem',color:'#555'}}>About {estimate.sizeLabel}{estimate.items.length ? ' · ' + estimate.items.map(i=>i.name+' ×'+i.qty).join(', ') : ''}</div>
+              <button type="button" onClick={()=>{setEstimate(null);setShowEst(true);}} style={{background:'none',border:'none',color:P,fontWeight:600,fontSize:'.82rem',cursor:'pointer',padding:0,marginTop:6,textDecoration:'underline'}}>Change estimate</button>
+            </div>
+          ) : showEst ? (
+            <div style={{border:'2px solid #e8e8e8',borderRadius:16,padding:16,marginBottom:20}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+                <div style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.25rem',fontWeight:700}}>💰 Instant Price Estimate</div>
+                <button type="button" onClick={()=>setShowEst(false)} style={{background:'none',border:'none',color:'#999',fontSize:'1.1rem',cursor:'pointer'}}>✕</button>
+              </div>
+              <LoadEstimator compact bookLabel="Use This Estimate ✓" onBook={e=>{saveEstimate(e);setEstimate(e);setShowEst(false);}}/>
+            </div>
+          ) : (
+            <button type="button" onClick={()=>setShowEst(true)} style={{width:'100%',display:'flex',alignItems:'center',gap:12,padding:'12px 16px',marginBottom:20,borderRadius:12,border:'2px dashed rgba(45,122,58,.45)',background:GL,cursor:'pointer',textAlign:'left'}}>
+              <span style={{fontSize:'1.5rem'}}>💰</span>
+              <span>
+                <span style={{display:'block',fontWeight:700,color:G,fontSize:'.95rem'}}>Not sure what it'll cost?</span>
+                <span style={{display:'block',fontSize:'.8rem',color:'#555'}}>Get an instant estimate. Pickups from {money(PRICING.minimum)}.</span>
+              </span>
+              <span style={{marginLeft:'auto',color:G,fontWeight:700}}>→</span>
+            </button>
+          )}
           <div style={{display:'flex',gap:12,marginBottom:24}}>
             {['Home','Business'].map(t => (
               <button key={t} onClick={()=>set('type',t)} style={{flex:1,padding:14,borderRadius:12,cursor:'pointer',border:'2.5px solid '+(form.type===t?(t==='Home'?G:P):'#e8e8e8'),background:form.type===t?(t==='Home'?GL:PL):'#fff',fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.2rem',fontWeight:700,color:form.type===t?(t==='Home'?G:P):'#999',transition:'all .2s'}}>
@@ -442,6 +477,7 @@ export default function QuoteForm({ compact = false, prefill = null }) {
               <div style={{fontWeight:700,fontSize:'.9rem',color:G}}>{form.day?.full}</div>
               <div style={{fontSize:'.85rem',color:'#555'}}>{TIME_SLOTS.find(t=>t.id===form.timeSlot)?.icon} {TIME_SLOTS.find(t=>t.id===form.timeSlot)?.label} · {TIME_SLOTS.find(t=>t.id===form.timeSlot)?.time}</div>
               <div style={{fontSize:'.82rem',color:'#999'}}>{form.service} · {form.type}</div>
+              {estimate && <div style={{fontSize:'.82rem',color:G,fontWeight:600,marginTop:2}}>💰 Estimate {money(estimate.low)} – {money(estimate.high)} · {estimate.sizeLabel}</div>}
             </div>
           </div>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14,marginBottom:14}}>

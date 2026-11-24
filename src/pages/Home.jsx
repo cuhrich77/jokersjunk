@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import QuoteForm from '../components/QuoteForm';
+import { PRICING, money } from '../lib/estimate';
 
 const STATS = [{val:'Locally Owned',lbl:'St. Augustine, FL'},{val:'Same Day',lbl:'Service Available'},{val:'100%',lbl:'Satisfaction Guaranteed'},{val:'Eco-Friendly',lbl:'We Donate & Recycle'}];
 const STEPS = [{n:'1',icon:'📞',title:'Book Online or Call',desc:'Schedule in 60 seconds. Confirm same-day or next-day instantly.'},{n:'2',icon:'🚛',title:'We Show Up & Quote',desc:'Friendly local crew arrives on time with an upfront price — no hidden fees.'},{n:'3',icon:'🃏',title:'Poof — It\'s Gone!',desc:'We haul it, sweep up, and you pay only when you\'re smiling.'}];
@@ -63,6 +64,17 @@ export default function Home() {
               <div style={{fontSize:'.88rem',opacity:.85,marginTop:4}}>{s.lbl}</div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* PRICE TEASER */}
+      <div style={{background:'#f0f9f2',borderBottom:'1px solid #e8e8e8',padding:'28px 24px'}}>
+        <div className="container" style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:20,flexWrap:'wrap'}}>
+          <div>
+            <div style={{fontFamily:'Barlow Condensed,sans-serif',fontSize:'1.8rem',fontWeight:800,lineHeight:1.1}}>Know your price <span style={{color:'#2d7a3a'}}>before we show up.</span></div>
+            <div style={{color:'#555',marginTop:4}}>Pick your items and see your estimate in seconds. Pickups from {money(PRICING.minimum)}.</div>
+          </div>
+          <Link to="/pricing" className="btn btn-primary">💰 See Your Price</Link>
         </div>
       </div>
 
