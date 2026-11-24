@@ -6,6 +6,7 @@ export default async function handler(req, res) {
   const apiKey = process.env.RESEND_API_KEY;
   const { firstName, lastName, phone, email, address, serviceType, scheduledFor, message, type, estimate } = req.body;
   const esc = (v) => String(v || '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const tel = String(phone || '').replace(/[^\d+]/g, '');
   const estimateRow = estimate ? `
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">💰 Online estimate</td>
@@ -33,45 +34,45 @@ export default async function handler(req, res) {
               <table style="width:100%;border-collapse:collapse;">
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;width:140px;">👤 Name</td>
-                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${firstName} ${lastName || ''}</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(firstName)} ${esc(lastName)}</td>
                 </tr>
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">📞 Phone</td>
-                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;"><a href="tel:${phone}" style="color:#2d7a3a;font-weight:bold;">${phone}</a></td>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;"><a href="tel:${tel}" style="color:#2d7a3a;font-weight:bold;">${esc(phone)}</a></td>
                 </tr>
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">📧 Email</td>
-                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${email || 'Not provided'}</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(email || 'Not provided')}</td>
                 </tr>
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">🏠 Type</td>
-                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${type || 'Not specified'}</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(type || 'Not specified')}</td>
                 </tr>
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">🚛 Service</td>
-                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${serviceType || 'Not specified'}</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(serviceType || 'Not specified')}</td>
                 </tr>
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">📅 Scheduled</td>
-                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${scheduledFor || 'Flexible'}</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(scheduledFor || 'Flexible')}</td>
                 </tr>
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">📍 Address</td>
-                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${address || 'Not provided'}</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(address || 'Not provided')}</td>
                 </tr>
                 ${estimateRow}
                 <tr>
                   <td style="padding:10px 0;font-weight:bold;color:#555;">📝 Notes</td>
-                  <td style="padding:10px 0;">${message || 'None'}</td>
+                  <td style="padding:10px 0;">${esc(message || 'None')}</td>
                 </tr>
               </table>
               <div style="margin-top:24px;text-align:center;">
-                <a href="tel:${phone}" style="background:#2d7a3a;color:#fff;padding:14px 32px;border-radius:50px;text-decoration:none;font-weight:bold;font-size:16px;">
-                  📞 Call ${firstName} Now
+                <a href="tel:${tel}" style="background:#2d7a3a;color:#fff;padding:14px 32px;border-radius:50px;text-decoration:none;font-weight:bold;font-size:16px;">
+                  📞 Call ${esc(firstName)} Now
                 </a>
               </div>
               <p style="text-align:center;color:#999;font-size:12px;margin-top:20px;">
-                Submitted on ${new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})} at ${new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}
+                Submitted on ${new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'America/New_York'})} at ${new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',timeZone:'America/New_York'})}
               </p>
             </div>
           </div>
