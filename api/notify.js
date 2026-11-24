@@ -4,7 +4,13 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const { firstName, lastName, phone, email, address, serviceType, scheduledFor, message, type } = req.body;
+  const { firstName, lastName, phone, email, address, serviceType, scheduledFor, message, type, estimate } = req.body;
+  const esc = (v) => String(v || '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const estimateRow = estimate ? `
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">💰 Online estimate</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(estimate)}</td>
+                </tr>` : '';
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
@@ -53,6 +59,7 @@ export default async function handler(req, res) {
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">📍 Address</td>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${address || 'Not provided'}</td>
                 </tr>
+                ${estimateRow}
                 <tr>
                   <td style="padding:10px 0;font-weight:bold;color:#555;">📝 Notes</td>
                   <td style="padding:10px 0;">${message || 'None'}</td>
