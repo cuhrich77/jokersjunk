@@ -291,9 +291,15 @@ export default function QuoteForm({ compact = false, prefill = null }) {
         phone:        form.phone,
         email:        form.email,
         address:      form.address,
+        zip:          form.zip,
+        customerType: form.type,
         serviceType:  form.service,
         scheduledFor: form.day?.full + ' - ' + form.timeSlot,
-        message:      form.type + ' customer. ZIP: ' + form.zip + '. ' + form.message + estNote + photoNote,
+        message:      form.message,
+        estimate,                 // full estimate object -> estimate_* columns
+        photoUrls,                // -> photo_urls
+        // Used only if the DB migration hasn't been run yet
+        legacyMessage: form.type + ' customer. ZIP: ' + form.zip + '. ' + form.message + estNote + photoNote,
       });
       if (error) throw error;
       await fetch('/api/notify', {
