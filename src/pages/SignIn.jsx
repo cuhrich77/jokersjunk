@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabase';
-import AuthCard, { Field, btnStyle, G, P } from '../components/AuthCard';
+import AuthCard, { Field, PasswordField, btnStyle, G, P } from '../components/AuthCard';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function SignIn() {
     <AuthCard title="Sign In" subtitle="Welcome back!">
       <form onSubmit={submit}>
         <Field label="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email" />
-        <Field label="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} required autoComplete="current-password" />
+        <PasswordField label="Password" value={password} onChange={e => setPassword(e.target.value)} required autoComplete="current-password" />
         <div style={{ textAlign: 'right', marginTop: -6, marginBottom: 8 }}>
           <button type="button" onClick={forgot} style={{ background: 'none', border: 'none', color: P, fontSize: '.85rem', fontWeight: 600, cursor: 'pointer', padding: 0 }}>
             Forgot password?

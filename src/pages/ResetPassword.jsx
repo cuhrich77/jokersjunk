@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../lib/AuthContext';
-import AuthCard, { Field, btnStyle, G } from '../components/AuthCard';
+import AuthCard, { PasswordField, btnStyle, G } from '../components/AuthCard';
 
 export default function ResetPassword() {
   const { user, loading } = useAuth();
@@ -35,7 +35,7 @@ export default function ResetPassword() {
   return (
     <AuthCard title="Set a new password">
       <form onSubmit={submit}>
-        <Field label="New password" type="password" value={password} onChange={e => setPassword(e.target.value)} required autoComplete="new-password" placeholder="At least 8 characters" />
+        <PasswordField label="New password" value={password} onChange={e => setPassword(e.target.value)} required autoComplete="new-password" placeholder="At least 8 characters" />
         <button type="submit" disabled={busy} style={{ ...btnStyle, opacity: busy ? 0.6 : 1 }}>
           {busy ? 'Saving...' : 'Update Password'}
         </button>

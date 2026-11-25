@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabase';
-import AuthCard, { Field, btnStyle, G } from '../components/AuthCard';
+import AuthCard, { Field, PasswordField, btnStyle, G } from '../components/AuthCard';
 import { AddressAutocomplete } from '../components/QuoteForm';
 
 export default function SignUp() {
@@ -56,7 +56,7 @@ export default function SignUp() {
         </div>
         <Field label="ZIP code" inputMode="numeric" maxLength={5} value={f.zip} onChange={set('zip')} autoComplete="postal-code" placeholder="32084" />
         <Field label="Email" type="email" value={f.email} onChange={set('email')} required autoComplete="email" />
-        <Field label="Password" type="password" value={f.password} onChange={set('password')} required autoComplete="new-password" placeholder="At least 8 characters" />
+        <PasswordField label="Password" value={f.password} onChange={set('password')} required autoComplete="new-password" placeholder="At least 8 characters" />
         <button type="submit" disabled={busy} style={{ ...btnStyle, opacity: busy ? 0.6 : 1 }}>
           {busy ? 'Creating account...' : 'Create Account'}
         </button>
