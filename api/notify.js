@@ -4,13 +4,31 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const { firstName, lastName, phone, email, address, serviceType, scheduledFor, message, type, estimate } = req.body;
+  const { firstName, lastName, phone, email, address, serviceType, scheduledFor, message, type, estimate, photos, photosAttempted, photosFailed } = req.body;
   const esc = (v) => String(v || '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const tel = String(phone || '').replace(/[^\d+]/g, '');
   const estimateRow = estimate ? `
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;font-weight:bold;color:#555;">💰 Online estimate</td>
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(estimate)}</td>
+                </tr>` : '';
+
+  // Only show photo links that point at our own Supabase storage
+  const photoList = (Array.isArray(photos) ? photos : [])
+    .filter((u) => typeof u === 'string' && /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\//.test(u))
+    .slice(0, 5);
+  const failed = Number(photosFailed) || 0;
+  const photoRow = (photoList.length || failed) ? `
+                <tr>
+                  <td colspan="2" style="padding:14px 0;border-bottom:1px solid #e8e8e8;">
+                    <div style="font-weight:bold;color:#555;margin-bottom:8px;">📷 Photos (${photoList.length})</div>
+                    ${photoList.map((u, i) => `
+                      <a href="${esc(u)}" target="_blank" style="display:inline-block;margin:0 6px 6px 0;">
+                        <img src="${esc(u)}" alt="Photo ${i + 1}" width="170" style="width:170px;height:130px;object-fit:cover;border-radius:8px;border:1px solid #ddd;display:block;">
+                      </a>`).join('')}
+                    ${photoList.length ? '<div style="font-size:12px;color:#999;">Tap a photo to open full size.</div>' : ''}
+                    ${failed ? `<div style="font-size:13px;color:#b00020;margin-top:6px;">⚠️ ${failed} of ${Number(photosAttempted) || failed} photo(s) failed to upload. Ask the customer to text them.</div>` : ''}
+                  </td>
                 </tr>` : '';
 
   try {
@@ -61,6 +79,7 @@ export default async function handler(req, res) {
                   <td style="padding:10px 0;border-bottom:1px solid #e8e8e8;">${esc(address || 'Not provided')}</td>
                 </tr>
                 ${estimateRow}
+                ${photoRow}
                 <tr>
                   <td style="padding:10px 0;font-weight:bold;color:#555;">📝 Notes</td>
                   <td style="padding:10px 0;">${esc(message || 'None')}</td>
