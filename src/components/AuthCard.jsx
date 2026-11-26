@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export const G = '#2d7a3a';
 export const P = '#7b2d8b';
@@ -23,6 +23,32 @@ export function Field({ label, ...props }) {
         onFocus={e => (e.target.style.borderColor = G)}
         onBlur={e => (e.target.style.borderColor = '#e8e8e8')}
       />
+    </div>
+  );
+}
+
+export function PasswordField({ label, ...props }) {
+  const [show, setShow] = useState(false);
+  return (
+    <div style={{ marginBottom: 14 }}>
+      <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 600, marginBottom: 6, color: '#333' }}>{label}</label>
+      <div style={{ position: 'relative' }}>
+        <input
+          {...props}
+          type={show ? 'text' : 'password'}
+          style={{ ...inputStyle, paddingRight: 64 }}
+          onFocus={e => (e.target.style.borderColor = G)}
+          onBlur={e => (e.target.style.borderColor = '#e8e8e8')}
+        />
+        <button
+          type="button"
+          onClick={() => setShow(v => !v)}
+          aria-label={show ? 'Hide password' : 'Show password'}
+          style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: P, fontWeight: 700, fontSize: '.8rem', cursor: 'pointer', padding: '6px 8px' }}
+        >
+          {show ? 'Hide' : 'Show'}
+        </button>
+      </div>
     </div>
   );
 }
