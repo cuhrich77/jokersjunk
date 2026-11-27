@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabase';
 import AuthCard, { Field, PasswordField, btnStyle, G } from '../components/AuthCard';
+import Turnstile, { captchaEnabled } from '../components/Turnstile';
 import { AddressAutocomplete } from '../components/QuoteForm';
 
 export default function SignUp() {
@@ -10,22 +11,26 @@ export default function SignUp() {
   const [f, setF] = useState({ firstName: '', lastName: '', phone: '', address: '', zip: '', email: '', password: '' });
   const [busy, setBusy] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
+  const [captcha, setCaptcha] = useState('');
+  const resetCaptcha = useRef(null);
   const set = k => e => setF({ ...f, [k]: e.target.value });
 
   const submit = async e => {
     e.preventDefault();
     if (f.password.length < 8) return toast.error('Password needs at least 8 characters');
+    if (captchaEnabled && !captcha) return toast.error('Please complete the verification check');
     setBusy(true);
     const { data, error } = await supabase.auth.signUp({
       email: f.email.trim(),
       password: f.password,
       options: {
+        captchaToken: captcha || undefined,
         data: { first_name: f.firstName, last_name: f.lastName, phone: f.phone, address: f.address, zip: f.zip },
         emailRedirectTo: window.location.origin + '/account',
       },
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { resetCaptcha.current && resetCaptcha.current(); return toast.error(error.message); }
     if (data.session) {
       toast.success('Welcome to Jokers Junk Removal!');
       navigate('/account');
@@ -57,6 +62,7 @@ export default function SignUp() {
         <Field label="ZIP code" inputMode="numeric" maxLength={5} value={f.zip} onChange={set('zip')} autoComplete="postal-code" placeholder="32084" />
         <Field label="Email" type="email" value={f.email} onChange={set('email')} required autoComplete="email" />
         <PasswordField label="Password" value={f.password} onChange={set('password')} required autoComplete="new-password" placeholder="At least 8 characters" />
+        <Turnstile onToken={setCaptcha} resetRef={resetCaptcha} />
         <button type="submit" disabled={busy} style={{ ...btnStyle, opacity: busy ? 0.6 : 1 }}>
           {busy ? 'Creating account...' : 'Create Account'}
         </button>
